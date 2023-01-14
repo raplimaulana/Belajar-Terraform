@@ -1,0 +1,41 @@
+### KONSEP DASAR NETWORK DI GCP ###
+
+Resource di GCP:
+•   VPC Network
+    VPC adalah network kita yang terisolasi di cloud, Sehingga hanya kita saja yang dapat mengakses infrastruktur tersebut.
+    VPC adalah representasi virtual dari infrastruktur network. Layaknya server fisik yang perlu dilakukan set-up server, set-up jaringannya, set-up router, dll.
+    VPC Network terdiri dari satu atau beberapa subnet. 
+
+•   Subnet
+    Subnet berisi alamat IP dari region/lokasi data center GCP.
+    Region memiliki beberapa Availability Zone (AZ). Availability Zone merupakan 1 data center GCP (real server fisik) yang terpisah secara bangunan dan juga jarak.
+    Jadi VM yang kita buat, berjalan di salah satu atau beberapa Availability Zone. 
+    Misal pada region asia-southeast2(jakarta) terdapat tiga Availibility Zone yakni Zone asia-southeast2-a, Zone asia-southeast2-b, dan Zone asia-southeast2-c.
+    Kita dapat menggunakan beberapa subnet dari region yang berbeda. Hal ini digunakan untuk kebutuhan infrastruktur yang lebih kompleks ataupun sebgai backup data. 
+
+    Setiap subnet di GCP akan memiliki range IP address tertentu untuk digunakan sebagai IP address VM kita. IP ini berjenis IP private yang hanya bisa diakses didalam jaringan saja (bukan untuk public traffic).
+    IP private ini digunakan untuk komunikasi didalam subnet dan antar Availibility Zone. 
+    Misal ada beberapa service yang berada dalam satu subnet yang sama, semuanya bisa saling terhubung menggunakan IP private.
+    Cara mudah menghitung IP address yang tersedia dari subnet GCP adalah menggunakan "subnet calculator" di google. Tinggal masukan input 'IP address range' pada kolom 'IP Address' dan subnet mask-nya pada kolom 'Subnet'.
+    Misal IP address range = 10.184.0.0/20, isi IP Address = 10.184.0.0 dan subnet = ...../20
+    Nama layanannya adalah 'VPC network'.
+
+    Selain itu pada saat membuat VM di GCP, kita juga diberikan satu buah IP Public untuk mengakses internet.
+    IP public ini akan disimpan dan digunakan oleh NAT gateway, sehingga hanya 1 IP public saja yang akan dipakai oleh semua VM agar bisa mengakses internet.
+    Di NAT gateway ini kita bisa mengatur port yang diberi akses, mengatur firewall, dll.
+    Nama layanananya adalah 'Network services > Cloud NAT'.
+
+•   Router
+•   NAT
+•   Firewall, dll
+
+
+Kontrol akses
+
+Selain dari konfigurasi network, di level infrastruktur tentu kita harus punya kontrol terhadap akses.
+Kita harus mengamankan semua resource yang ada di subnet kita.
+Pengamanan dapat dilakukan menggunakan konfigurasi akses di level subnet. Nama layanannya adalah 'Network Access Control List (NACL)'.
+atau bisa juga dengan menggunakan konfigurasi akses di level VM. Nama layanannya adalah 'firewall rule'.
+Selain itu bisa juga dengan membuat firewall rule lalu assign ke VM.
+Kita juga harus mengontrol siapa aja yang dapat akses ke VPC network, boleh mengakses kemana saja, dll.
+

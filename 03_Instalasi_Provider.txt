@@ -1,0 +1,20 @@
+### INSTALASI PROVIDER ###
+Provider yang akan digunakan adalah Google Cloud.
+
+##install gcloud cmd
+1. Install melalui powershell
+   (New-Object Net.WebClient).DownloadFile("https://dl.google.com/dl/cloudsdk/channels/rapid/GoogleCloudSDKInstaller.exe", "$env:Temp\GoogleCloudSDKInstaller.exe") & $env:Temp\GoogleCloudSDKInstaller.exe
+2. Update Path
+   Open the start menu, start typing environment and click Edit system environment variables.
+   System properties > Advanced > Environment Variables > Piluh Path > Edit > New > add C:\Users\rppl\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin
+
+##autentikasi akun google yang terhubung ke tempat project berada
+gcloud auth application-default login
+
+##logout akun GCP
+gcloud auth application-default revoke      
+
+##menambahkan provider GCP ke State Terraform
+@file ada Templates/02_Instalasi Provider/main.yml
+
+terraform init

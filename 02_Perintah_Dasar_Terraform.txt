@@ -1,0 +1,18 @@
+### PERINTAH DASAR TERRAFORM ###
+Perintah-perintah umum yang biasa digunakan pada saat menggunakan Terraform:
+•   terraform apply
+    Mengeksekusi kode pada main.tf untuk diterapkan pada state Terraform.
+    Sebelum diterapkan, Terraform akan menampilan review perubahan atau penambahan apa saja yang dilakukan oleh kode pada main.tf
+
+•   terraform apply -auto-approve
+    Mengeksekusi kode pada main.tf tanpa menampilkan review dan secara langsung diterapkan pada state Terraform.
+
+    Jika menggunakan CI/CD terraform, perintah "terraform apply" tidak bisa digunakan.
+    CI/CD job yang berjalan akan menunggu input selamanya dari kita, sedangkan kita tidak bisa memasukan input pada saat proses CI/CD.
+
+•   terraform plan
+    Melihat review perubahan yang akan terjadi, sebelum diterapkan di infrastrukur.
+
+•   terraform destroy
+    Menghapus semua hal yang ada di infratruktur.
+    

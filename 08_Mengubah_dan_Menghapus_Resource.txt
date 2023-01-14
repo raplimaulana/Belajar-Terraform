@@ -1,0 +1,17 @@
+### MENGUBAH DAN MENGHAPUS RESOURCE ###
+
+##mengubah resource GCP menggunakan Terraform
+Misal menambahkan attribute baru secondary IP Range untuk subnet dev-subnet-01
+@file ada Templates/07_Mengubah dan menghapus Resource/main.yml
+
+terraform init             #jika pertama kali dan belum pernah menggunakan terraform
+terraform apply
+
+##menhapus resource GCP menggunakan Terraform
+Ada 2 cara untuk menghapus resource di Terraform:
+•   Dengan cara menghapus kode yang ada pada file main.tf
+    *Cara ini yang paling disarankan, karena jika menggunakan cara kedua, walaupun sudah dihapus, kode main.tf masih tetap sama. Sehingga bisa membingungkan kita.
+ 
+•   Dengan cara menggunakan perintah di terraform.
+
+    terraform destroy -target google_compute_subnetwork.dev-subnet-02 

@@ -1,0 +1,89 @@
+### ENVIRONMENT VARIABLE ###
+
+Environment variable dapat digunakan untuk men-set variable di Terraform 
+
+Terraform refers to a number of environment variables to customize various aspects of its behavior. 
+None of these environment variables are required when using Terraform, but they can be used to change some of Terraform's default behaviors in unusual situations, or to increase output verbosity for debugging.
+
+•   TF_LOG
+    Enables detailed logs to appear on stderr which is useful for debugging.
+
+    export TF_LOG=trace               #enable detailed log
+    export TF_LOG=off                 #disable detailed log
+
+•   TF_LOG_PATH
+    This specifies where the log should persist its output to. 
+    Note that even when TF_LOG_PATH is set, TF_LOG must be set in order for any logging to be enabled. 
+    
+    export TF_LOG_PATH=./terraform.log
+
+    *for example, to always write the log to the directory you're currently running terraform
+
+•   TF_INPUT
+    If set to "false" or "0", causes terraform commands to behave as if the -input=false flag was specified. 
+    This is used when you want to disable prompts for variables that haven't had their values specified. 
+
+    export TF_INPUT=0
+
+•   TF_VAR_name
+    
+    Environment variables can be used to set variables. 
+    The environment variables must be in the format TF_VAR_name and this will be checked last for a value. 
+
+    export TF_VAR_region=us-west-1
+    export TF_VAR_ami=ami-049d8641
+    export TF_VAR_alist='[1,2,3]'
+    export TF_VAR_amap='{ foo = "bar", baz = "qux" }'
+
+•   TF_CLI_ARGS
+    The value of TF_CLI_ARGS will specify additional arguments to the command-line. 
+    These arguments are inserted directly after the subcommand (such as plan) and before any flags specified directly on the command-line.
+    
+    For example, the following command: TF_CLI_ARGS="-input=false" terraform apply -force is the equivalent to manually typing: terraform apply -input=false -force.
+
+
+•   TF_CLI_ARGS_name
+    The flag TF_CLI_ARGS affects all Terraform commands. 
+    If you specify a named command in the form of TF_CLI_ARGS_name then it will only affect that command. 
+    As an example, to specify that only plans never refresh, you can set TF_CLI_ARGS_plan="-refresh=false".
+
+•   TF_DATA_DIR
+    TF_DATA_DIR changes the location where Terraform keeps its per-working-directory data, such as the current backend configuration.
+    By default this data is written into a .terraform subdirectory of the current directory, but the path given in TF_DATA_DIR will be used instead if non-empty.
+
+    *The data directory is used to retain data that must persist from one command to the next.
+     So it's important to have this variable set consistently throughout all of the Terraform workflow commands (starting with terraform init) or else Terraform may be unable to find providers, modules, and other artifacts.
+
+•   TF_WORKSPACE
+    For multi-environment deployment, in order to select a workspace, instead of doing terraform workspace select your_workspace, it is possible to use this environment variable. 
+    Using TF_WORKSPACE allow and override workspace selection.
+
+    export TF_WORKSPACE=your_workspace
+
+    *Using this environment variable is recommended only for non-interactive usage.
+     Since in a local shell environment it can be easy to forget the variable is set and apply changes to the wrong state.
+
+•   TF_IN_AUTOMATION
+    If TF_IN_AUTOMATION is set to any non-empty value, Terraform adjusts its output to avoid suggesting specific commands to run next. 
+    This can make the output more consistent and less confusing in workflows where users don't directly execute Terraform commands, like in CI systems or other wrapping applications.
+    This is a purely cosmetic change to Terraform's human-readable output, and the exact output differences can change between minor Terraform versions.
+
+•   TF_REGISTRY_DISCOVERY_RETRY
+    Set TF_REGISTRY_DISCOVERY_RETRY to configure the max number of request retries the remote registry client will attempt for client connection errors or 500-range responses that are safe to retry.
+
+•   TF_REGISTRY_CLIENT_TIMEOUT
+    The default client timeout for requests to the remote registry is 10s. 
+    TF_REGISTRY_CLIENT_TIMEOUT can be configured and increased during extraneous circumstances.
+
+    export TF_REGISTRY_CLIENT_TIMEOUT=15
+
+•   TF_CLI_CONFIG_FILE
+    The location of the Terraform CLI configuration file.
+
+    export TF_CLI_CONFIG_FILE="$HOME/.terraformrc-custom"
+
+•   TF_IGNORE
+    If TF_IGNORE is set to "trace", Terraform will output debug messages to display ignored files and folders. 
+    This is useful when debugging large repositories with .terraformignore files.
+
+    export TF_IGNORE=trace

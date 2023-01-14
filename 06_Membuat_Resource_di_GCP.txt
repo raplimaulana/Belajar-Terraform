@@ -1,0 +1,7 @@
+### MEMBUAT RESOURCE DI GCP ###
+
+##membuat resource GCP menggunakan Terraform
+@file ada Templates/05_Membuat Resource di GCP/main.yml
+
+terraform init             #jika pertama kali dan belum pernah menggunakan terraform
+terraform apply

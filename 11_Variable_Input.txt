@@ -1,0 +1,53 @@
+### VARIABLE INPUT ###
+
+Variable input digunakan agar kode Terraform kita re-usable dan bisa digunakan oleh team lain menggunakan parameter yang kita expose.
+Variable pada Terraform dapat digunakan oleh resource lain layaknya sebuah variabel pada bahasa pemrograman.
+Contohnya pada setting subnet. Kita dapat menggunakan kode Terraform yang sama untuk proses development, staging dan production, namun menggunakan setting IP range yang berbeda
+
+##membuat variable
+@file ada Templates/11_Variable Input/main.yml
+
+1. Mendefinisikan variable.
+   variable "NAMAVARIABLE"{
+        description = "subnet untuk dev environment"
+   }
+
+2. Masukan variabel ke dalam resource
+   resource "google_compute_subnetwork" "dev-subnet-01"{
+        ...
+        ip_cidr_range = var.NAMAVARIABLE
+        ...
+    }
+
+3. Input values ke variable. 
+   Untuk melakukan input values ke Variable dapat menggunakan 3 cara, yakni:
+   - Passing value melalui terminal.
+     terraform apply
+    
+     *secara otomatis akan muncul perintah untuk mengisi variable
+
+   - Passing value melalui terraform argument.
+     terraform apply -var NAMAVARIABLE=VALUE
+     terraform apply -var subnet-ip_cidr_range=10.120.0.0/16
+
+   - Mengisi value menggunakan file terraform.tfvars
+     NAMAVARIABLE = ATTRIBUTE
+     subnet-ip_cidr_range=10.120.0.0/16
+
+     terraform.apply
+
+##membuat banyak file terraform.tfvars untuk berbagai macam kondisi
+Misal kita akan membuat 3 environment untuk digunakan pada proses development, staging dan production.
+
+1. Membuat 3 file variable terpisah
+   - terraform-dev.tfvars
+   - terraform-stag.tfvars
+   - terraform-prod.tfvars
+
+2. Eksekusi file terraform main.tf menggunakan file variable.
+   Jika terdapat file variable bernama 'terraform.tfvars', maka Terraform akan secara otomatis mengambil data variable dari file tersebut.
+   Namun jika tidak ada, maka harus disebutkan secara manual.
+
+   terraform apply -var-file NAMAFILE
+   terraform apply -var-file terraform-dev.tfvars
+ 

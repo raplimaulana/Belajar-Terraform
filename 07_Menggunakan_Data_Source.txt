@@ -1,0 +1,42 @@
+### MENGGUNAKAN DATA SOURCE ###
+
+Menggunakan Data Source sebagai argument ke resource yang akan kita buat.
+Sebelumnya argument network pada pembuatan subnet menggunakan resource network yang baru dibuat.
+Lalu bagaimana jika kita ingin menggunakan resource yang sudah kita buat sejak lama.
+Kita dapat memasukan ID VPC Network di akun GCP yang dapat dilihat melalui browser ke argument network pada pembuatan subnet.
+
+Teraform menyediakan Data Source untuk mengambil suatu argument di Provider, sehingga kita tidak perlu repot-repot membuka browser untuk melihatnya melalui akun Provider yang digunakan.
+
+
+•  Membuat resource subnetwork menggunakan resource network yang baru dibuat.
+   
+   resource "google_compute_network" "development-network" {                                              
+        name = "development-network"                                                                      
+        auto_create_subnetworks = false                                                                  
+   }
+
+   resource "google_compute_subnetwork" "dev-subnet-01"{
+        name = "dev-subnet-01"
+        ip_cidr_range = "10.100.0.0/16"
+        network = google_compute_network.development-network.id
+        region = "asia-southeast2"
+    } 
+
+•  Membuat resource subnetwork menggunakan resource network yang ada atau sudah dibuat sebelumnya.
+   
+   data "google_compute_network" "existing_default_network"{
+        name = "default"
+   }
+
+   resource "google_compute_subnetwork" "dev-subnet-02"{
+        name = "dev-subnet-02"
+        ip_cidr_range = "10.110.0.0/16"
+        network = data.google_compute_network.existing_default_network.id
+        region = "asia-southeas2"
+   }  
+
+##membuat resource GCP menggunakan Terraform
+@file ada Templates/06_Menggunakan Data Source/main.yml
+
+terraform init             #jika pertama kali dan belum pernah menggunakan terraform
+terraform apply

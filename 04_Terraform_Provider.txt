@@ -1,0 +1,47 @@
+### TERRAFORM PROVIDER ###
+Provider merupakan langkah pertama yang harus kita konfigurasi di Terraform sebelum menulis kode infrastrukturnya.
+Provider mengekspos resource dari platform tertentu misal Google Cloud, AWS, Azure, dll. 
+Provider tahu semua API dari platform tersebut dan tahu cara komunikasi ke platform atau teknologi tertentu.
+
+Cari dokumentasi Provider yang akan digunakan pada web resmi https://registry.terraform.io/browse/providers
+
+
+
+
+## CONTOH KONFIGURASI GOOGLE CLOUD ###
+
+##konfigurasi provider Google Cloud di region Jakarta
+provider "google" {
+    project = "belajar-teraform"
+    region  = "asia-southeast2" 
+}
+
+##membuat sebuah PVC network
+resource "google_compute_network" "vpc" {
+    name = "giri-vpc"
+}
+
+##membuat subnet di dalam VPC network
+resource "google_compute_subnetwork" "subnet"{
+    name = "giri-vpc-subnet"
+    ip_cidr_range = "10.15.0.0/16"
+    network       = google_compute_network.vpc.id
+}
+
+
+
+
+### CONTOH KONFIGURASI KUBERNETES ###
+
+##konfigurasi provider kubernetes
+provider "kubernetes" {
+    config_context_auth_info = "belajar"
+    config_context_cluster   = "giri-cluster"
+}
+
+##membuat namespace
+resource "kubernetes_namespace" "giri" {
+    metadata{
+        name = "giri-namespace"
+    }
+}

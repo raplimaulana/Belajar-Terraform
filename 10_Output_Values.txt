@@ -1,0 +1,17 @@
+### OUTPUT VALUES ###
+
+Output values digunakan untuk melihat attribute yang di set di GCP (mirip return value pada bahasa pemrograman + print out).
+Sebelumnya kita belajar melihat attribute menggunakan file terraform.tfstate dan perintah "terraform state list".
+Cara lainnya adalah menggunakan perintah output.
+Dengan perintah ini, kita bisa mendapatkan attribute tertentu dari resource yang telah kita buat sebelumnya.
+Jika sebelumnya pada saat mengeksusi perintah "terraform plan" ada beberapa atribute tidak terlihat dan tertulis '(know after apply), sekarang bisa dilihat menggunakan perintah output.
+
+##membuat output
+@file ada Templates/10_Output Values/main.yml
+
+output "NAMAVARIABLE" {
+    value = JENISRESOURCE.NAMARESOURCE.ATTRIBUTE
+    value = google_compute_network.development.network.id
+}
+
+*satu output hanya bisa digunakan untuk satu value

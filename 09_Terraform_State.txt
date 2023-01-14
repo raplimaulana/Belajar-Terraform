@@ -1,0 +1,16 @@
+### TERRAFORM STATE ###
+
+Terraform akan selalu mengecek file main.tf untuk mengupdate state-nya sebelum diterapkan di provider.
+Oleh Terraform, state tersebut akan disimpan ke dalam file bernama terraform.tfstate
+File terraform.tfstate adalah json file yang berisi list resource state yang ada pada akun kita.
+File ini di-generate secara otomatis ketika kita menjalankan perintah "terraform apply".
+
+Untuk history state-state sebelumnya yang pernah kita terapkan pada infrastruktur dapat dilihat pada file terraform.tfstate.backup
+
+Terraform state command:
+•   terraform state list
+    Untuk melihat list resource yang ada di state sekarang.
+
+•   terraform state show NAMARESOURCE
+    Untuk melihat detail attribute dari suati resource secara detail.
+    Misal: terraform state show google_compute_subnetwork.dev-subnet-01

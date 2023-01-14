@@ -1,0 +1,49 @@
+### TERRAFORM ###
+
+Apa itu Terraform?
+•   Dengan Terraform kita dapat melakukan optimasi infrastruktur.
+•   Memanage platform yang berjalan diatas infrastruktur tersebut.
+•   Memanage server yang berjalan diatas platform yang sudah kita nbangun.
+•   Terraform merupakan tools yang bersifat deklaratif. 
+    Hanya perlu ditulis state-nya ingin seperti apa, secara otomatis Terraform akan mencari sendiri langkah-langkahnya untuk mencapai state tersebut. Kemudian akan dieksekusi secara otomatis.
+•   Terraform biasanya digunakan sebagai tool untuk provision infrastruktur karena memudahkan admin dalam membangun sistem.
+
+Contoh penggunaan Teraform:
+•   Membuat PVC.
+•   Menjalankan VM dan server.
+•   Membuat user dan policy.
+•   Instalasi Docker.
+
+Perbedaan Teraform dengan Ansible
+•   Ansible.
+    Tools untuk melakukan konfgurasi.                       
+    Dipakai untuk melakukan konfigurasi terhadap server yang sudah dibuat sebelunya.
+    Misal mengutak ngatik VM, Deploy aplikasi, install dan upadte software yang ada di dalam server. 
+
+•   Teraform.
+    Tools untuk membuat infrastruktur, update infrastruktur dan replikasi infrastruktur. 
+    Dipakai untuk membuat infrastruktur baru seperti membuat VM, menambah Microservices, dll.
+
+Arsitektur Terraform
+
+Terraform memiliki 2 komponen, yaitu
+•   Core.
+    Core akan membandingkan State dengan Terraform Config File. 
+    Jika ada perbedaan atau penambahan konfigurasi, secara otomatis Terraform akan mengupdate State-nya (create, update, delete) dan mengeksekusi plan tersebut pada provider tempat dimana infrastruktur dibangun.
+    - Terraform Config File. 
+      Berisi file konfigurasi infrastruktur yang akan dibangun.
+    - State.
+      Berisi informasi state terakhir/terkini yang dimiliki oleh infrastruktur. Misal ada berapa VM-nya, networkingnya seperti apa, dll. 
+
+•   Provider.
+    Penyedia layanan tempat server cloud kita dibangun. Seperti AWS, Google Cloud, Azure dll.
+    Selain penyedia layanan, Providernya bisa diartikan sebagai Kubernetes dan service-service lainnya yang lebih high level.
+
+##instalasi Terraform
+1. Download Terraform melalui link berikut https://developer.hashicorp.com/terraform/downloads
+   Pada menu Binary download for Windows, pilih 386 untuk 32-bit systems atau AMD64 untuk 64-bit systems. 
+   Extract file yang telah didownload dan simpan ke dalam folder baru tempat Terraform akan diinstall.
+
+2. Update Path Windows
+   Open the start menu, start typing environment and click Edit system environment variables.
+   System properties > Advanced > Environment Variables > Piluh Path > Edit > New > add C:\Users\rppl\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin
