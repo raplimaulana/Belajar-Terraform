@@ -1,0 +1,8 @@
+### TERRAFORM CONSOLE ###
+Terraform console is an interactive shell where you can evaluate expressions.
+
+##Command terraform console
+terraform console
+
+> min (20,200,12)
+12

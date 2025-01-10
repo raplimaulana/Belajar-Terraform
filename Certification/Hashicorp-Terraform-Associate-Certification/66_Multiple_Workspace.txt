@@ -1,0 +1,84 @@
+### MULTIPLE WORKSPACE ###
+A terraform configuration has a backend that:
+- Define how operation are executed
+- Where persistent data is stored e.g. terraform state 
+
+Multiple workspace mean allowing multiple state to be associated with a single configuration.
+Configuration still has only one backend, but multiple distinct instance of that configuration to be deployed without configuring a new backend or changing authentication credentials.
+
+##Workspace Different 
+Terraform cloud workspace and local working directories serve same purpose, but they store their data differently:
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|        Component         |                     Local Terraform                       |                             Terraform Cloud                                |
+|--------------------------|-----------------------------------------------------------|----------------------------------------------------------------------------|
+| Terraform configuration  | On disk                                                   | In linkded version control repository or periodically uploaded via API/CLI |
+|--------------------------|-----------------------------------------------------------|----------------------------------------------------------------------------|
+| Variable value           | As .tfvars file, as CLI argument, or in shell environment | In workspace                                                               |
+|--------------------------|-----------------------------------------------------------|----------------------------------------------------------------------------|
+| State                    | On disk or in remote backend                              | In workspace                                                               |
+|--------------------------|-----------------------------------------------------------|----------------------------------------------------------------------------|
+| Credential and secret    | In shell environment or entered at prompts                | In workspace, stored as sensitive variable                                 |
+---------------------------------------------------------------------------------------|-----------------------------------------------------------------------------
+
+##List all workspace available
+terraform workspace list 
+
+##Show current workspace 
+teraform workspace show
+
+##Create new workspace 
+terraform workspace new staging
+terraform workspace new production
+
+##Switch to target workspace 
+terraform workspace select staging
+
+##Delete workspace 
+terraform workspace delete staging 
+
+##Example 
+nano variable.tf 
+
+...
+variable "workspace_iam_rules" {
+  default = {
+    staging    = "arn:aws:iam:STAGING-ACCOUNT-ID:role/Terraform"
+    production = "arn:aws:iam:PRODUCTION-ACCOUNT-ID:role/Terraform"
+  }
+}
+
+nano staging.tfvars 
+
+...
+
+
+
+nano main.tf 
+
+terraform {
+  backend "s3" {
+    bucket = "terraform-backend-43294082"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+  assume_role = "{var.workspace_iam_rules[terraform.workspace]}
+}
+
+variable "workspace_iam_rules" {
+  default = {
+    staging    = "arn:aws:iam:STAGING-ACCOUNT-ID:role/Terraform"
+    production = "arn:aws:iam:PRODUCTION-ACCOUNT-ID:role/Terraform"
+  }
+}
+resource "aws_s3_bucket" "bucket" {
+  bucket = var.bucket
+}
+
+
+terraform apply --var-file staging.tfvars

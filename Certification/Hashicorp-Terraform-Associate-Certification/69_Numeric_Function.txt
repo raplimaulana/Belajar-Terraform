@@ -1,0 +1,89 @@
+### NUMERIC FUNCTIONS ###
+• abs 
+  Return absolute value of given number.
+  
+  > abs(23)
+  23
+
+  > abs(0)
+  0
+
+  > abs(-12.4)
+  12.4
+
+• floor
+  Return closest whole number that is less than or equal to given value, which may be a fraction.
+
+  > floor(5)
+  5
+
+  > floor(4.9)
+  4
+
+• ceil 
+  Return closest whole number that is greater than or equal to given value.
+
+  > ceil(5)
+  5
+
+  > ceil(5.1)
+  6
+
+• log
+  Return logarithm of a given number in a given base.
+
+  > log(50,10)
+  1.6998700043360185
+
+  > log(16,2)
+  4
+
+• min
+  Takes one or more numbers and return smallest number from set.
+
+• max 
+  Takes one or more numbers and return greatest number from set.
+
+• parseint
+  Parses given string as a representation of an integer in specified base and returns resulting number.
+
+  > parseint("100", 10)
+  100
+
+  > parseint("FF", 16)
+  255
+
+  > parseint("-10", 16)
+  -16
+
+  > parseint("1011111011101111", 2)
+  48879
+
+  > parseint("aA", 62)
+  656
+
+  > parseint("12", 2)
+  Error: Invalid function argument 
+  Invalid value for "number" parameter:
+  Cannot parse "12", as a base 2 integer.
+
+• pow
+  Calculate an exponent by raising its first argument to power of second argument.
+
+  > pow(3, 2)
+  9
+
+  > pow(4, 0)
+  1
+  
+• signum
+  Determine sign of a number, returning a number between -1 and 1 to represent sign.
+
+  > signum(-13)
+  -1
+
+  > signum(0)
+  0
+
+  > signum(344)
+  1

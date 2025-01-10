@@ -1,0 +1,27 @@
+### TERRAFORM TROUBLE SHOOTING ###
+There are 4 types of error you can encounter with terraform:
+• Language error
+  Terraform encounters a syntax error in your confguration for terraform or HCL language.
+
+  terraform fmt 
+  teraform validate
+  terraform version
+
+• State error
+  Your resource state has changed from expected state in your configuration file.
+
+  terraform -refresh-only
+  terraform apply 
+  terraform -replace flag
+
+• Core error 
+  A bug has occured with core library.
+
+  TF_LOG
+  open github issue
+
+• Provider error 
+  Provider's API has changed or does not work as expected due to emerging edge cases.
+
+  TF_LOG
+  open github issue

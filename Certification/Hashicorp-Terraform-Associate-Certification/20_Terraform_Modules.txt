@@ -1,0 +1,50 @@
+### TERRAFORM MODULES ###
+Terraform module is a group of configuration files that provide common configuration functionallity.
+Imagine clicking wizard that create many cloud resource.
+- Enforce best practices.
+- Reduce the amount of code.
+- Reduce time to develop scripts.
+
+##Example with and without modules 
+#AWS provider (not a module)
+if you had to create vpc, you wou would have spesific many networking resources.
+
+resource "aws_vpc" "main {
+  cidr_blocks       = "10.0.0.0/16"
+  instance-tenancy" = "default"
+  tags = {
+    name = "main
+  }
+}
+
+resource "aws_subnet" "main" {
+  vpc_id      = aws_vpc.main.id 
+  cidr_blocks = "10.0.1.0/24"
+  tags = {
+    name = "main"
+  }
+}
+
+...
+
+#AWS VPC module 
+Using a module you can use a shorthand Domain Specific Language (DSL) that will reduce amont of work.
+
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+
+  name = "mu-vpc"
+  cidr = "10.0.0.0/16"
+
+  azs             = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]  
+  public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]  
+
+  enable_nat_gateway  = true
+  private_vpn_gateway = true
+
+  tags = {
+    Terraform = "true"
+    Environmet = "dev"
+  }
+}

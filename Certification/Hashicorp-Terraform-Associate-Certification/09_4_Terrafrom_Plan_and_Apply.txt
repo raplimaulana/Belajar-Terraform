@@ -1,0 +1,6 @@
+### TERRAFORM PLAN AND APPLY ###
+##Terraform plan 
+Terraform plan akan menampilan output apa saja yang akan kita deploy sesuai dengan file terraform yan gsudah dibuat.
+
+terraform plan 
+terraform apply

@@ -1,0 +1,23 @@
+### BACKEND INITIALIZATION ###
+-backend-config flag for terraform init can be used for partial backend configuration.
+In situation where backend settings are dynamic or sensitive and so cannot be statically specified in configuration file.
+
+##Example
+nano backend.hcl 
+
+workspaces {
+  name = "workspace"
+}
+hostname     = "app.terraform.io"
+organization = "company"
+
+
+
+nano main.tf 
+
+terraform {
+  required_version = "~> 0.12.0"
+  backend "remote" {}
+}
+
+terraform init -backend-config=backend.hcl

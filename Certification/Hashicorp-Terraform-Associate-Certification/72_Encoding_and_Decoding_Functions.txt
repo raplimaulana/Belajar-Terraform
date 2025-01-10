@@ -1,0 +1,37 @@
+### ENCODING AND DECODING FUNCTIONS ###
+Funtion that will encode and decode for various format.
+• Encoding
+  - base64encode
+    > base64encode("Hello World")
+    SGVsbG8gV29ybGQ=
+
+  - urlencode
+    > urlencode("Hello World")
+    Hello%World
+
+    > urlencode("☃")
+    %E2%98%83
+
+    > "http://example.com/search?q=${urlencode("terraform urlencode")}"
+    http://example.com/search?q=terraform%20urlencode
+
+  - jsonencode
+
+  - textencodebase64
+
+  - yamlencode
+
+  - base64gzip
+
+• Decoding
+  - base64decode
+    > base64decode("GVsbG8gV29ybGQ=")
+    Hello World
+
+  - jsondecode
+
+  - yamldecode
+
+  - csvdecode
+
+  - textdecodebase64

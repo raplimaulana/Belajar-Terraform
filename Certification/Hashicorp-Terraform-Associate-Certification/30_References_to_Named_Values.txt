@@ -1,0 +1,48 @@
+### REFERENCES TO NAMED VALUES ###
+Named valued are build-in expressions to reference various values such as:
+• Resource 
+  <Resource Type>.<Name>
+  e.g: aws_instance.myserver
+
+• Input variables 
+  <var>.<Name>
+  e.g: var.myserver 
+
+• Local Values 
+  local.<Name>
+  e.g: local.myserver
+
+• Child module outputs
+  module.<Name>
+  e.g: module.myserver
+
+• Data sources 
+  data.<Data Type>.<Name>
+
+
+Filesystem and workspace info:
+- path.module
+  Path of module where expression is placed.
+
+- path.root 
+  Path of root module of configuration.
+
+- path.cwd
+  Path of current working directory.
+
+- terraform.workspace
+  Name of currently selected workspace.
+
+
+Block-local values (within body of blocks)
+- count.index
+  When you use count meta argument.
+
+- each.key /each.value
+  When you use for_each meta argument.
+
+- self.<attribute>
+  Self reference information within the block (provisioners and connections)
+
+*named values resemble attribute nation for map (object) values but are not objects and do not act as objects.
+ you cannot use square brackets to access attribute of named value like an object.

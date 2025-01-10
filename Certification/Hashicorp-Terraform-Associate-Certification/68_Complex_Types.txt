@@ -1,0 +1,82 @@
+### COMPLEX TYPE ###
+A complex type is a type that grups multipe value into a single value.
+Complex type are represented by type constructor but several of them also have shorthand keyword versions.
+
+There are 2 categories of complex type:
+• Collection types 
+  A collection type allow multiple values of one other type to be grouped together as a single value.
+  Type of value within a collection is called its elemet type.
+  For Grouping similar values.
+  - List 
+    Its like an array, you use an integer as index to retrieve value.
+
+    variable "planet" {
+      type = list 
+      default = ["mars", "earth", "moon"]
+    }
+    
+    username = var.user[0]
+
+  - Map
+    its like ruby hash or single nested json object.
+    You use a key as index to retrieve value.
+
+    variable "plans" {
+      type = map 
+      default = {
+        "PlanA" = "10 USD"
+        "PlanB" = "50 USD"
+        "PlanC" = "100 USD"
+      }
+    } 
+
+    plan - var.plans["PlanB"]
+
+  - Set  
+    Its similiar to a list but has no secondary index or preserved oredering.
+    All value must of same type and will be cast to match based on first element.
+
+    > toset(["a", "b", 3])
+    [
+        "a",
+        "b",
+        "3"
+    ]
+
+• Structural types 
+  A structural type allows multiple values of several distinct types to be grouped together as a single value.
+  Structural types require a schema as an agrument to specify which types are allowed for which elements.
+  For grouping potentially dissmilar values.
+
+  variable "with_operational_attribute" {
+    type = object({
+      a = string                                #a required attributr
+      b = optional(string)                      #an optional attribute
+    })
+  }
+
+  - Object 
+    Object is a map with more explicit keying.
+    object({name=string, age=number})
+
+    variable "plans_object" {
+      type = object({ 
+        PlanName   = string
+        PlanAmount = number
+      })
+      defult = {
+        "PlanName"   = "Basic",
+        "PlanAmount" = 10 
+      }
+    } 
+
+  - Tuple 
+    Tuple is a multiple return with parameters.
+    tuple([string, number, boolean])
+
+    variable "random" {
+      type = object({
+        type    = tuple([string, number, bool])
+        default = ["Helo", 22, false]
+      })
+    }

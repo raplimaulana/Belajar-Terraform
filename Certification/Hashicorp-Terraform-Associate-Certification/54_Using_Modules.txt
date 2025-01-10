@@ -1,0 +1,175 @@
+### USING MODULES ###
+Terraform modules can be publicly found in terraform registry.
+• Public module
+  Terraform registry is integerated directly into terraform.
+  Syntax for specifying a registry module is <NAMESPACE>/<NAME>/<PROVIDER>.
+  Terraform init command will download and cache any modules referenced by a configuration.
+
+  module "consule" {
+    source  = "hashicorp/consul/aws"
+    version = "0.1.0"
+  }
+
+• Private module  
+  To configure private module access, you need to authenticate against terraform cloud via terraform login.
+  Alternatively you can create a user API token anf manually configure credentials in CLI config file.
+  Private registry have source strings of form <HOSTNAME>/<NAMESPACE>/<NAME>/<PROVIDER>.
+
+  module "vpc" {
+    source  = "app.terraform.io/example_corp/vpc/aws"
+    version = "0.9.3"
+  }
+
+
+##Creating modules 
+structure file 
++ terraform-aws-apache-example/ 
++ main.tf
++ LICENSE
++ version.tf
++ variable.tf 
++ README.md
++ output.tf
+
+
+
+nano terraform-aws-apache-example/LICENSE 
+license term and conditons
+....
+
+
+
+nano terraform-aws-apache-example/README.md
+Terraform Module to provision an EC2 instance that is running Apache.
+Not intended for production !!
+
+
+
+nano terraform-aws-apache-example/version.tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = ">= 2.59.0"
+    }
+  }
+}
+
+
+
+nano terraform-aws-apache-example/variable.tf 
+variable "vpc_id" {
+  type = string
+}
+
+variable "my_ip_with_cidr" {
+  type        = string 
+  description = "Provide your IP e.g. 104.194.51.113/32"
+}
+
+variable "public_key" {
+  type = string
+}
+
+variable "instance_type" {
+  type = string
+}
+
+variable "server_name" {
+  type = string
+}
+
+
+
+nano terraform-aws-apache-example/userdata.yaml 
+#cloud-config 
+packages:
+  - httpd 
+runcmd:
+  - systemctl start httpd 
+  - sudo systemctl enable httpd
+
+
+
+nano terraform-aws-apache-example/main.tf 
+provider "aws" {
+  region = "us-east-1"
+}
+
+data "aws_vpc" "main" {
+  id = var.vpc_id
+}
+
+data "template_file" "user_data" {
+  template = file("${abspath(path.module)}/userdata.yaml")
+}
+
+data "aws_ami" "amazon-linux-2" {
+  most_recent = true 
+  owners = ["amazon"]
+  filter {
+    name   = "owner-alias"
+    values = "["amazon"]
+  }
+  filter {
+    name   = "name"
+    values = "["amzn2-ami-hvm*"]
+  }
+}
+
+resource "aws_security_group" "sg_my_server" {
+  name        = "sg_my_server"
+  description = "MyServer Security Group"
+  vpc_id      = data.aws_vpc.main.id
+  ingress [
+    desccription     = "SSH"
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = [var.my_ip_with_cidr]
+    ipv6_cidr_blocks = []
+    prefix_list_ids  = []
+    security_groups  = []
+    self             = false
+  ]
+}
+
+resource "aws_key_pair" "deployer" {
+  key_name = "deployer-key"
+  public_key = var.public_key
+}
+
+resource "aws_instance" "my_server" {
+  ami                    = "${data.aws_ami.amazon-linux-2.id}"
+  instance_type          = var.instance_type
+  key_name               = "${aws_key_pair.deployer.key_name}"
+  vpc_security_group_ids = [aws_security_group.sg_my_server.id]
+  user_data              = data.template_file.user_data.rendered
+
+  tags = {
+    Name = var.server_name
+  }
+}
+
+
+
+nano main.tf 
+terraform {
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+#module "apache" {
+#  source = ".//terraform-aws-apache-example"               #variable diisi manual 
+#}
+
+module "apache" {
+  source = ".//terraform-aws-apache-example"
+  vpc_id = "vpc-bd9bdcc7"
+  my_ip_with_cidr = "104.194.51.113/32"
+  public_key      = "ssh-rsa AAA..."
+  instance_type   = "t2.micro"
+  server_name     = "Apache Example Server"
+}

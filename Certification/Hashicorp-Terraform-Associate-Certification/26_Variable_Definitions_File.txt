@@ -1,0 +1,57 @@
+### VARIABLE DEFINITION FILES ###
+A variable definitions file allows you to set the values for multiple variable at once.
+Variable definition files are named .tfvars or tfvars.json.
+By default terraform.tfvars will be autoloaded when included in the root of your project directory.
+
+##Example variable files 
+nano terraform.tfvars 
+
+image_id = "ami-abc123"
+availibility_zone_names = [
+  "us-west-1a",
+  "us-west-1b"
+]
+
+##Variables via environment variables 
+A variable value can be defined by environment variables.
+Variable starting with TF_VAR_<name> will be read and loaded.
+
+export TF_VAR_image_id=ami-abc123
+
+##Loading input variables
+• Default Autoloaded variables file 
+  - terraform.tfvars
+    When you create a named terraform.tfvars file, it will be automatically loaded when running terraform apply.
+
+• Additional variables files (not autoloaded)
+  - my_variables.tfvars
+    You create additional variables file.
+    They wil not autoloaded (you'll need to spesific them in via command line).
+    Eg. dev.tfvars, prod.tfvars
+
+• Additional variables files (autoloaded)
+  - my_variables.auto.tfvars
+    If you name your file with auto.tfvars it will always be loaded.
+
+• Specify a variables via command line
+  - -var-file dev.tfvars 
+    You can spesific variables inline via command line for individual overrides.
+
+• Inline variables via command line 
+  - -var ec2_type="t2.medium"
+    You can spesific variables inline via command line for individual overrides.
+
+• Environment variables 
+  - TF_VAR_my_variable_name
+    Terraform will watch for environment variables that begin with TF_VAR_ and apply those as variables.
+
+##Variable definition precedence
+You can override variables via many files and commands.
+Definition precedence is the order in which terraform will read variables.
+
+As it goes down this list it will override variable
+• Environment variables 
+• terraform.tfvars
+• terraform.tfvars.json
+• *.auto.tfvars or *.auto.tfvars.json
+• -var and -var-file                                    #paling diutamakan

@@ -1,0 +1,65 @@
+### TERRAFORM REMOTE STATE ###
+terraform_remote_state data source retrives root module output values from another terraform configuration using latest state snapshot from remote backend.
+Only root level outputs values from remote state are exposed.
+Resource data and output values from nested modules are not accessible.
+To make a nested module output value accessible as a root module output value, you must explicitly configure a pssthrough in root module.
+
+module "app" {
+  source = "..."
+}
+
+output "app_value" {
+  value = module.app.example
+}
+
+##Example 
+#Remote backend 
+data "terraform_remote_state" "vpc" {
+  backend = "remote"
+  config = {
+    organization = "hashicorp"
+    workspaces   = {
+      name = "vpc-prod"
+    }
+  }
+}
+
+resource "aws_instance" "foo" {
+  subnet_id = data.terraform_remote_state.vpc.subnet_id
+}
+
+#local backend 
+data "terraform_remote_state" "vpc" {
+  backend = "local"
+  config = {
+    path = "../project1/terraform.tfstate"
+  }
+}
+
+resource "aws_instance" "myserver" {
+  subnet_id = data.terraform_remote_state.vpc.outputs.subnet_id
+}
+
+
+##Alternative terraform_remote_state
+terraform_remote_state only exposes output values, it's user must have access to entire state snapshot which often includes some sensitive information.
+It recommend explicitly publishing data for external consumption to a separate location instead of accessing it via remote state.
+
+data "aws_s3_bucket" "selected" {                                   #use a datasource and reference whenever you can 
+  bucket = "bucket.test.com"
+}
+
+data "aws_route53_zone" "test_zone" {                               #use a datasource and reference whenever you can 
+  name = "test.com."
+}
+
+resource "aws_route53_record" "example" {
+  zone_id = "${data.aws_route53_zone.test_zone.id}"
+  name    = "bucket"
+  type    = "A"
+
+  alias {
+    name    = "${data.aws_s3_bucket.selected.website_domain}"
+    zone_id = "${data.aws_s3_bucket.selected.hosted_zone_id}"
+  }
+}

@@ -1,0 +1,36 @@
+### WHAT IS HASHICORP ###
+##Hashicorp
+Hashicorp is a company specializing in managed open-source tools used to support the development and deployment of large-scale service-oriented software installations.
+
+##Hashicorp Cloud Platform (HCP)
+HCP is a unified platform to access Hashicorp various products.
+HCP services are cloud agnostic (suited for multi-cloud like AWS, GCP and Azure).
+
+Products Hashicorp:
+• Boundary
+  Secure remote access to systems based on trusted identity.
+
+• Consul
+  Service discovery platform.
+  Provides a full-featured service mesh for secure service segmentation across any cloud or runtime environment.
+  Distributed key-value storage for application configuration.
+
+• Nomad
+  Schedulling and deployment tasks across worker nodes in cluster.
+
+• Packer
+  Tools for building VM images for later deployment.
+
+• Terraform 
+  Infrastructure as code software which is enables provisioning and adapting virtual infrastructure across all major cloud provider.
+  - Terraform Cloud 
+    A place to storage and manage IaC in the cloud oe with teams.
+
+• Vagrant
+  Building and maintenance of reproducible software development environments via virtualization technology.
+
+• Vault 
+  Secrets management, identity-based access, encrypting appplication data and auditing of secrets for application, systems and user.
+
+• Waypoint
+  Modern workflow to build, deploy and release across platforms.

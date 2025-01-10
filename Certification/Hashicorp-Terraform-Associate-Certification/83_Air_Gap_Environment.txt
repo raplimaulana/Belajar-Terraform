@@ -1,0 +1,8 @@
+### AIR GAP ENVIRONMENT ###
+What is air gap?
+Air gap or disconnected network is a network security measure employed on one or more computers to ensure that a secure computer network is physically isolated from unsecure network e.g. public internet.
+In otherwise, no internet, no outside activity.
+
+Indsutries in public sector (e.g. governemt, military) or large enterprise e.g. finance and energy often employ air gap network.
+Hashicorp terraform enterprise supports an installation type for air gapped environments.
+To install or update terraform enterprise, you will supply an "air gap bundle" which is an archive of a terraform enterprise release version.

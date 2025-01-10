@@ -1,0 +1,30 @@
+### INFRASTRUCTURE LIFECYCLE ###
+##What is infrastucrure lifecycle 
+Infrastructure lifecycle is a number of clearly defined and distinct worj phases which are used by DevOps Enginners to plan, design, build, test, deliver and retire cloud infrastucture.
+
+##Day 0-2 to concept
+Day 0-2 is a smplified way to describe phases of an infrastructure lifecycle.
+• Day 0 = plan and design.
+• Day 1 = develop and iterate.
+• Day 3 = go live and maintain.
+
+##How does IaC enhance the infrastucrure lifecycle?
+•  Realiability
+   IaC makes change idempotent, consistent, repeatable and predictable.
+   *Idempotent = no matter how many times you run IaC, you will always end up with the samre state that is expected.
+
+•  Manageability
+   - Enable mutation via code.
+   - Revised with minimal changes.
+
+•  Sensibility
+   Avoid financial and reputational losses to even loss of life when considering government and military dependencies on infrastructure.
+
+##Non-idempotent vs idempotent
+•  Non-idempotent
+   - When I deploy my Iac config file, it will provision and launch 2 VM.
+   - When I update my IaC again and deploy again, I will end up with 2 new VM with total 4 VM.
+
+•  Idempotent
+   - When I deploy my Iac config file, it will provision and launch 2 VM.
+   - When I update my IaC again and deploy again, I will update the VM if changed by modifying or deleting and creating new VM (still 2 VM).

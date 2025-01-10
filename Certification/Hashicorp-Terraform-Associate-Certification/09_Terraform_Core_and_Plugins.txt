@@ -1,0 +1,10 @@
+### TERRAFORM CORE AND PLUGINS ###
+Terraform is logically split into two main parts:
+• Terraform core
+  Use to remote procedure call (RPC) to communicate with terraform plugins.
+  Terraform core is statically-compiled binary written in the Go progamming language 
+
+• Terraform plugins
+  Expose an implementation for a specific service or provisioner.
+
+*You can open online open-book about terraform in Terraform Best Practices (www.terraform-best-practices.com)

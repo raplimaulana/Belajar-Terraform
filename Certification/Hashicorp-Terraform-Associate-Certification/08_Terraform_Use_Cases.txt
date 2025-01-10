@@ -1,0 +1,19 @@
+### TERRAFORM USE CASES ###
+• Iac for exotic providers
+  Terraform supports a variety of providers outside AWS, GCP, Azure and sometimes is the only provider.
+  Terraform is open source an extendable so any API could be used to create IaC tooling for any kind of cloud platform or technology. 
+  E.g Heroku, Spotify Playlist.
+
+• Multi-tier application
+  Terraform by default make it easy to divide large and complex applications into isolate configuration script (module).
+  It has a complexity advantage over cloud native IaC tools for its flexibility while retaining smiplicity over imperative tools.
+
+• Dipossable environments 
+  Easily stand up an environment for a software demo or a temporaty development.
+
+• Resources schedulers
+  Terraform is not a just defined to infrastucture of cloud resource, but can be used to dynamic schedule docker container, hadoop, spark and other software tools.
+  You can provision your own scheduling grid.
+
+• Multi-cloud deployment 
+  Terraform is cloud-agnostic and allows a single configuration to be used to manage multiple providers, and to even handle cross-cloud dependencies.

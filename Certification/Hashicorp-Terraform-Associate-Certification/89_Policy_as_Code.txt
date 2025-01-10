@@ -1,0 +1,29 @@
+### POLICY AS CODE ###
+Sentiel is built around the idea provide all benefit of policy as code.
+
+Benefit of policy as code:
+- Sandboxing
+  Ability to create guardrail to avoid dangerous action or remove need of manual verification.
+
+- Codification
+  Policies are well documented and exactly represent what is enforced.
+
+- Version control 
+  Easy to modify or iterate on policies, with a chain of history of changes over time.
+
+- Testing 
+  Syntax and behaviour can be easily validated with sentinel, ensuring policies are configured as expected.
+
+- Automation 
+  Policies existing as code allows you direct integrate policies in various system to auto-reidiate, notify.
+
+Sentinel and policy as code:
+- Language
+  All sentinel policies are written using sentinel language.
+  Designed to be non-progammer and progammer friendly, embeddable and safe.
+
+- Development 
+  Sentinel provides a CLI for development and testing.
+
+- Testing 
+  Sentinel provide a test framework designed specifically for automation.

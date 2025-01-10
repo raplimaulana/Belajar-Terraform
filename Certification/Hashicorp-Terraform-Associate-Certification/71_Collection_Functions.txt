@@ -1,0 +1,313 @@
+### COLLECTION FUNCTIONS ###
+• alltrue
+  Return true if all elements in a given collection are true or "true".
+  It also return true if collection is empty.
+
+  > alltrue(["true", true])
+  true
+
+  > alltrue([true, false])
+  false
+
+• anytrue
+  Return true if any element in a given collection is true or "true".
+  It also return false if collection is empty.
+
+  > anytrue(["true"])
+  true 
+
+  > anytrue([true])
+  true
+
+  > anytrue([true, false])
+  true
+
+  > anytrue([])
+  false 
+
+• chunklist
+  Split a single list into fixed-size chunks, returning a list of lists.
+
+  > chunklist(["a", "b", "c", "d", "e"], 2)
+  [
+    [
+      "a",
+      "b",
+    ],
+    ...
+  ]
+
+• coalesce
+  Take any number of arguments and return first one that isn't null or an empty string.
+  
+  > coalesce("a", "b")
+  a
+
+  > coalesce("", "b")
+  b 
+
+  > coalesce(1,2)
+  1
+
+• coalescelist
+  Take any number of list arguments and return first one that isn't empty 
+
+  > coalescelist(["a", "b"], ["c", "d"])
+  [
+    "a",
+    "b",
+  ]
+
+• compact
+  Take a list of strings and return a new list with any empty string elements removed.
+
+  > compact(["a", "", "b", "c"])
+  [
+    "a",
+    "b",
+    "c",
+  ]
+
+• concat 
+  Take two or more lists and combine them into a single list.
+
+  > concat(["a", ""], ["b", "c"])
+  [
+    "a",
+    "",
+    "b",
+    "c",
+  ]
+
+• contains
+  Determine whether a given list or set contains a given single value as one of it's elements.
+
+  > contains(["a", "b", "c"], "a")
+  true
+
+  > contains(["a", "b", "c"], "d")
+  false
+
+• distinct
+  Take a list and return a new list with any duplicate elements removed.
+
+  > distinct(["a", "b", "c", "c", "d", "b"])
+  [
+    "a",
+    "b",
+    "c",
+    "d",
+  ]
+
+• element 
+  Retrieve a single element from a list.
+
+  > element(["a", "b", "c"], 3)
+  a
+
+• index 
+  Find element index for a given value in a list.
+
+  > index(["a", "b", "c"], "b")
+  1
+
+• flatten
+  Take a list and replace any element that are list with a flattened sequence of list contents.
+
+  > flatten([[["a", "b"], []], ["c"]])
+  ["a", "b", "c"]
+
+• keys 
+  Take a map and return a list containing keys from that map.
+
+  > keys({a=1, c=2, d=3})
+  [
+    "a",
+    "c",
+    "d",
+  ]
+
+• length
+  Determine length of a given list, map or string.
+
+  > length([])
+  0
+
+  > length(["a", "b"])
+  2
+
+  > length({"a" = "b"})
+  1
+
+  > length("hello")
+  5
+
+• lookup
+  Retrieve value of a single element from a map, given its key.
+  If given key doesn't exist, given default value is returned instead.
+
+  > lookup({a="ay", b="bee"}, "a", "what?")
+  ay
+
+  > lookup({a="ay", b="bee"}, "c", "what?")
+  what 
+
+• matchkeys
+  Construct a new list by taking a subset of element from one list whose indexes match corresponding indexes of values in another list.
+
+  > matchkeys(["i-123", "i-abc", "i-def"], ["us-west", "us-east", "us-east"], ["us-east"])
+  [
+    "i-abc",
+    "i-def",
+  ] 
+
+• merge
+  Take an arbitary number of maps or objects and return a single map or object and return a single map or object that contains a merged set of elements from all argument.
+
+  > merge ({a="b", c="d"}, {e="f", c="z"})
+  {
+    "a" = "b"
+    "c" = "z"
+    "e" = "f"
+  }
+
+• one 
+  Take a list, set or tuple value with either zero or one elements.
+  If collection is empty, one returns null. Otherwise, one return first element.
+  If there are two or more elements then one will return an error.
+
+  > one([])
+  null 
+
+  > one(["hello"])
+  hello
+
+  > one(["hello", "goodbye"])
+  Error: Invalid function argument
+
+• range 
+  Generate a list of numbers using a start value, a limit value and step value.
+
+  > range(3)
+  [
+    0,
+    1,
+    2,
+  ]
+
+• reserve 
+  Take a sequence and produces a new sequence of same length with all of same elements as given sequnce but in reverse order.
+
+  > reverse([1,2,3])
+  [
+    3,
+    2,
+    1,
+  ]
+
+• setintersection
+  Function takes multiple set and produce a single set containing only elements that all of given sets have in common.
+  In other words, it computes intersection of sets.
+
+  setintersection(["a", "b"], ["b", "c"], ["b", "d"])
+  [
+    "b",
+  ]
+
+• setproduct
+  Function finds all of possible combinations of element from all of given sets by computing cartesian product.
+  
+  setproduct(["development", "staging", "prouction"], ["app1", "app2"])
+  [
+    [
+      "development",
+      "app1",
+    ],
+    [
+      "development",
+      "app2",
+    ],
+    ...
+  ]
+
+• setsubtract
+  Function return a new set containing elements from first set that are not present in second set.
+  In other words, it is computes relative complement of first set in second set.
+
+  > setsubtract(["a", "b", "c"], ["a", "c"])
+  [
+    "b",
+  ]
+
+• setunion
+  Function take multiple sets and produces a single set containing elements from all of given sets.
+  In other words, it computes union of sets.
+
+  > setunion(["a", "b"], ["b", "c"], ["d"])
+  [
+    "d",
+    "b",
+    "c",
+    "a",
+  ]
+
+• slice 
+  Extract some consecutive elements from within a list.
+
+  >slice(["a", "b", "c", "d"], 1, 3)
+  [
+    "b",
+    "c",
+  ]
+
+• sort 
+  Take a list of strings and return a new list with those strings sorted lexicographically.
+
+  > sort(["e", "d", "a", "x"])
+  [
+    "a",
+    "d",
+    "e",
+    "x",
+  ]
+
+• sum
+  Take a list or set of numbers and return sum of these number.
+  
+  > sum([10, 13, 6, 4.5]) 
+  33.5
+
+• transpose
+  Take a map of list of strings and swap keys and values to produce a new map of list of strings.
+
+  > transpose({"a" = ["1", "2"], "b" = ["2","3"]})
+  {
+    "1" = [
+      "a",
+    ],
+    "2" = [
+      "a",
+      "b",
+    ],
+    ...
+  }
+
+• values 
+  Take a map and return a list containing values of elements in that map.
+
+  > values({a=3, c=2, d=1})
+  [
+    3,
+    2,
+    1,
+  ]
+
+• zipmap
+  Construct a map from a list of keys and a corresponding list of values.
+
+  > zipmap(["a", "b"], [1, 2])
+  {
+    "a" = 1,
+    "b" = 2,
+  }
+

@@ -1,0 +1,26 @@
+### TERRAFORM INIT ###
+Terraform init initializes your terraform project by:
+1. Downloading plugin dependencies e.g. providers and modules.
+2. Create a .terraform directory.
+3. Create dependencies lock file to enforce expected versions for pugin and terraform itself.
+   - Dependencies lock file = .terraform.lock.hcl
+   - State lock file        = .terraform.tfstate.lock.hcl
+
++ procet
+  + .terraform/providers/registry.terraform.io
+    + terraform-provider-aws_v3_54.0_x5
+  + .terraform.lock.hcl
+  + main.tf
+
+##Command terraform init 
+• terraform init -upgrade
+  Upgrade all plugins to latest version that complies with configuration's version constraint.
+
+• terraform init -get-plugin-false
+  Skip plugin installation.
+
+• terraform init -plugin-dir=PATH
+  Force plugin installation to read plugins only from target directory.
+
+• terraform init -lockfile=MODE 
+  Set a dependency lock file mode.

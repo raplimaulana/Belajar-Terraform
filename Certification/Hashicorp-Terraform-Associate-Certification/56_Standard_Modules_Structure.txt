@@ -1,0 +1,36 @@
+### STANDARD MODULES STRUCTURE ###
+Standard module structure is a file and directory layout recomended for module deplooyment.
+
++ README.md                         #root module
++ main.tf
++ variable.tf 
++ outputs.tf 
++ ...
++ modules/
+  + nestedA/                        #nested module
+    + README.md 
+    + variables.tf 
+    + main.tf 
+    + outputs.tf
+  + nestedB/
+    + ../
++ examples/
+  + exampleA
+    + main.tf 
+  + exampleB/
+    + ../
+
+##Root module
+The primary entry point is root module.
+These are required files in root directory.
+- main.tf      = Entry point file of your module
+- variables.tf = Variable that can be passed in
+- outputs.tf   = outputed values
+- README.md    = Describes how modules work 
+- LICENSE      = License under which this module is available 
+
+##Nested module
+Nested modules are optional, but must be contained on modules/ directory:
+- A submodule that contains a README is consider usable by external user 
+- A submodule that does not contain a README is consider internal use only 
+- Avoid using relative paths when sourcing module blocks

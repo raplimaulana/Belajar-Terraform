@@ -1,0 +1,37 @@
+### RESOURCE BEHAVIOUR ###
+When you execute an execution order via terraform apply, it will perform one of following resource
+• create
+  Resources that exist in configuration but are not associated with a real infrastructure object in state.
+  
+  e.g:
+  terraform apply
+
+  Terrform used to the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+    + create 
+
+• destroy
+  Resource that exist in state but no longer exist in configuration.
+
+  e.g:
+  terraform apply
+
+  Terrform used to the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+    - destroy 
+
+• update in-place
+  Resources whose arguments have changed.
+  
+  e.g:
+  terraform apply
+
+  Terrform used to the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+    ~ update in-place
+
+• destroy and re-create
+  Resources whose arguments have changed but which cannot be updated in-place due to remote API limitations.
+
+  e.g:
+  terraform apply
+
+  Terrform used to the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+    -/+ destroy and then create replacement 

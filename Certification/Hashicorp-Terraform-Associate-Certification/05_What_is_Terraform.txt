@@ -1,0 +1,25 @@
+### WHAT IS TERRAFORM ###
+##Terraform
+Terraform is an open-source and cloud-agnostic Infrastructure as Code (IaC) tools.
+The Configuration files are written in Hashicorp Configuration Language (HCL).
+
+Notable features of Terraform:
+• Installable modules
+• Plan and predict changes
+• Dependency graphing
+• State management
+• Provision infrastructure in familiar languages (via AWS CDK)
+• Terraform registry with 1000+ providers
+
+##Terraform Cloud
+Terraform Cloud is a Software a Services (SaaS) offering for:
+• Remote state storage
+• Version control integration
+• Flexible workflows
+• Collaborate on Infrastructure changes in a single inified web portal (www.terraform.io/cloud)
+
+In majority of cases you should be using Terraform Cloud.
+The only case where you may not want to use it to manage your state file is your company has many regulatory requirements along with a long procurement process so you could use standard remote backend, Atlantis or investigate Terrafor Enterprise.
+Terraform Cloud has a generous free-tier that allows for team collaboration for the first 5 users of your organization.
+The underlying software for Terraform Cloud and Terraform Enterprise is known as the "Terraform Platform"
+

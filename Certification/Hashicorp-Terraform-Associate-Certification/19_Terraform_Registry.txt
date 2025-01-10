@@ -1,0 +1,45 @@
+### TERRAFORM REGISTRY ###
+Terraform registry is a web portal to browse, download or publish availabe providers or modules (https://registry.terraform.io).
+You can easily find documentation and code sample for providers. 
+• Providers 
+  Plugin that is mapping to a Cloud Service Provider (CSP).
+
+• Module 
+  Group of configuration files thah provide common configuration functionality.
+  - Enforce best practices.
+  - Reduce the amount of code.
+  - Reduce time to develop scripts.
+
+*everythingpublished to terraform registry is public-facing
+
+##Private registry 
+Terraform cloud allow you to publish private modules for your organization within the terraform cloud private registry.
+When creating a module you need to connect to a Version Control System (VCS) and choose repository. 
+
+##Terraform provider configuration
+provider "aws" {
+  alias  = "west"                           #set an alternative provider
+  region = "us-west-2"
+}
+
+resource "aws_instance" "foo" {
+  provider = aws.west                       #how to reference an alias provider
+}
+
+terrraform {
+  required_providers {
+    mycloud = {                             #how to set alias provider for a parent module
+      source  = "mycorp/mycloud"
+      version = "~> 1.0"
+      configuration_aliases = [mycloud.alternate]
+    }
+  }
+}
+
+module "aws_vpc" {
+  source = "./aws_vpc"
+  providers = {
+    aws = aws.west                          #how to set alias provider for a child module
+  }
+}
+

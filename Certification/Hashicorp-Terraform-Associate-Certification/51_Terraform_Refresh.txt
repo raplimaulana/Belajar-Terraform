@@ -1,0 +1,27 @@
+### TERRAFORM REFRESH ###
+Terraform refresh command reads current setting from all managed remote objects and updates terraform state to match.
+When an approved manual configuration of a resources has changed or removed, we use -refresh-only flag to detect changes in our state file.
+Terrform refresh will not modify your real remote objects, but it will modifiy terraform state.
+Terraform refresh command is an alias for refresh only and auto approve.
+
+terraform refresh = terraform apply -refresh-only - auto-approve
+
+*terraform refresh has been deprecated and with refresh-only flag, it was not safe since it did not give you and opportunity to review changes before updating state file.
+
+
+##Terraform refresh-only mode 
+-refresh-only flag for terraform plan or apply allows you to refresh and update your state file without making changes to your remote infrastucture.
+
+Imagine you create terraform scripts that deploys a VM on AWS, you ask an engineer to terminate the server. 
+Instead of updating terraform script, they mistakenly terminate the server via AWS Console.
+
+- terraform apply
+  If state file is correct, change infrastucture to match state file.
+  Terraform will notie that VM is missing.
+  Terraform will propose to create new VM.
+
+- terraform apply -refresh-only 
+  If state file is wrong, change state file to match infrastucture.
+  Terraform will notie that VM is missing.
+  With -refresh-only page, that missing VM is intentional.
+  Terraform will propose to delete VM on state file.

@@ -1,0 +1,25 @@
+### DEBUGGING TERRAFORM ###
+Terraform has detailed logs which can be enabled by setting TF_LOG environment into:
+- TRACE 
+- DEBUG 
+- INFO
+- WARN
+- ERROR 
+- JSON
+  Output logs at TRACE level or higher, and uses a perseable JSON encoding as the formatting.
+
+Logging can be enabled by separatelly, it takes some options as TF_LOG.
+- TF_LOG_CORE
+- TF_LOG_PROVIDER
+
+You can choose where you want to log with TF_LOG_PATH.
+
+##Command TF_LOG terraform
+TF_LOG=TRACE terraform apply
+TF_LOG=TRACE TF_LOG_PATH=./terraform.log terraform apply
+
+
+##Crash logs
+if terraform ever crashes (a "panic" in GO runtime), it saves a log file with debug logs from session as well as panic message and backtrace to crash.log.
+This log file is meant to be passed along to developer terraform via github issue.
+As user, we're not required to dig into this file.

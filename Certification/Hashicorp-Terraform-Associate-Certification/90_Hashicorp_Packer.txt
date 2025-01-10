@@ -1,0 +1,115 @@
+### HASHICORP PACKER ###
+Packer is a developer tool provision a build images that will be stored in a repository.
+Using a build image before you deploy provides:
+- Immutable infrastructure
+- Your VM in your fleet are all one-to-one in configuration 
+- Faster deploy for multiple server after each build 
+- Earlier detection and invention of package changes or dperecation of old technology
+
+##Packer configurations a machine via a packer template
+Commit Changes > CI/CD > Trigger Build Images > Provision Image > Store Images > Reference Image > Provision Infrastructure 
+
+##Download packer 
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install packer
+
+##Packer template file 
+Packer configure a machine or container via a packer template.
+Packer template use hashicorp configuration language (HCL).
+
+variable "ami_id" {
+  type    = string
+  default = "ami-01e78c5619c5e68b4"
+}
+
+locals {
+  app_name = "htppd"
+}
+
+source "amazon-ebs" "httpd" {                                   #source say where and what kind of image to build
+  ami_name      = "my-server-${local.app_name}"                 #in this caseit will create an EBS-backend AMI, image will be stored directly in AWS under EC2 images.
+  instance_type = "t2.micro"                                    
+  region        = "us-west-2"
+  source_ami    = "${var.ami_id}
+  ssh_username  = "ec2-user"
+  tags = {
+    Env  = "DEMO"
+    Name = "my-server-${local.app_name}"
+  }
+}
+
+build {                                                         #build allows us to provide configuration script
+  sources = ["source.amazon-ebs.httpd"]                         #packer support a wide range of provisioners such a Chef, Puppet, Ansible, PowerShell, Bash, Salt, etc
+  provisioner "shell" {
+    script = "script/script.sh"
+  }
+
+  post-processor "shell-local" {                                #post-provisioner run after image is build, they can be used to upload artifacts or re-package
+    inline = ["echo foo"]
+  }
+}
+
+##Example 2
+nano apache.pkr.hcl 
+
+variable "ami_id" {
+  type    = string 
+  default = "ami-087c17d1fe0178315"
+}
+
+locals {
+  app_name = "httpd"
+}
+
+source "amazon-ebs" "httpd" {
+  ami_name      = "my-server-${local.app_name}"
+  instance_type = "t2.micro"
+  region        = "us-east-1"
+  source_ami    = "${var.ami_id}"
+  ssh_username  = "ec2-user"
+  tags          = {
+    Name = local.app_name
+  }
+}
+
+//belum diisi
+  sources = ["source.amazon-ebs.httpd"]
+  provisioner "shell" {
+    inline = [
+      "sudo yum install -y httpd",
+      "sudo systemctl start httpd",
+      "sudo systemctl enable httpd"
+    ]
+  }
+}
+
+
+
+nano main.tf 
+
+provider "aws" {
+  profile = "default"
+  region  = "us-east-1"
+}
+
+data "aws_ami" "packer_image" {
+  #name_regex "^my-server-httpd.*"
+  filter {
+    name   = "name"
+    values = ["my-server-httpd"] 
+  }
+  owners = ["self"]
+}
+
+resource "aws_instance" "my_server" {
+  ami           = data.aws_ami.packer_image
+  instance_type = "t2.micro"
+  tags = {
+    Name = "Server-Apache-Packer"
+  }
+}
+
+output "public_ip" {
+  value = aws_instance.myserver.public_ip
+}

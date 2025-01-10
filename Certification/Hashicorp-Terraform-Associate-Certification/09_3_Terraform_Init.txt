@@ -1,0 +1,12 @@
+### TERRAFORM INIT ###
+Ketika pertama kali menjalankan perintah terraform init, akan terbuat file baru dengan nama terraform.lock.hd
+
+##Terraform init
+terraform init 
+
+#Memperbaiki indentasi
+terraform fmt main.tf 
+terraform fmt
+
+#Mengecek validasi file 
+terraform validate 

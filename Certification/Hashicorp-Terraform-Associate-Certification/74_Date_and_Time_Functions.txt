@@ -1,0 +1,30 @@
+### DATE AND TIME FUNCTIONS ###
+• formatdate
+  Convert a timestamp into different time format. 
+
+  > formatdate("DD MM YYYY hh:mm ZZZ", "2021-11-12T23:10:23Z")
+  12 Nov 2021 23:10 UTC
+
+  > formatdate("EEE, DD MM YY hh:mm:ss ZZZ", "2021-11-12T23:10:23Z")
+  Tuesday, 12 Nov 21 23:10:23 UTC
+
+  > formatdate("EEE, DD MM YYYY hh:mm ZZZ", "2021-11-12T23:10:23-08:00")
+  Tuesday, 12 Nov 2021 23:10:23 -0800
+
+  > formatdate("MM DD, YYYY", "2021-11-12T23:10:23Z")
+  Nov 12, 2021
+
+  > formatdate("HH:mmaa", "2021-11-12T23:10:23Z")
+  11.10pm
+
+• timeadd
+  Add a duration to a timestamp, returning a new timestamp.
+
+  > timeadd("2022-12-14T00:00:00Z", "10m")
+  2022-12-14T00:10:00Z
+
+• timestamp
+  Return a UTC timestamp string in RFC 3339 format.
+
+  timestamp()
+  2025-01-22T07:44:12Z

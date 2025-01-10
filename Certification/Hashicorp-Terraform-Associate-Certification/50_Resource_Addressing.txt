@@ -1,0 +1,21 @@
+### RESOURCE ADDRESSING ###
+A resource address is a string taht identifies zero or more resourceinstances in your configuration.
+For example an address is composed of two parts [module path] [resource path]:
+• module.module_name[module index]
+  A module path adresses a module within tree of modules.
+  - module         = A namespaces for modules.
+  - module_name    = User defined name of module. 
+  - [module index] = When multiple specific a index.
+
+  e.g.
+  resource "aws_instance" "web" {
+    ...
+  }
+
+  aws_instance.web[3]                           #select 3rd VM
+
+• resource_type.resource_name[instance index]
+  A resource spec addresses a specific resource instance in selected module.
+  - resource_type    = Type of resource being addressed.
+  - resource_name    = User defined name of resource.
+  - [instance index] = When multiple specific a index

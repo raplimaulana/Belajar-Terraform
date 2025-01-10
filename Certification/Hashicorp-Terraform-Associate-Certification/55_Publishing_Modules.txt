@@ -1,0 +1,19 @@
+### publishing modules ###
+Anyone can publish and share modules on terraform registry.
+Public modules are managed via a pulic git repo on github.
+Once a module is registered, to push updates you simply push new versions to prperly formed git tags.
+
+Published modules support:
+- Versioning
+- Automatically generate documentation
+- Allow browsing version histories
+- Show examples
+- READMEs
+
+Repo's name must be in following format:
+terraform-<PROVIDER>-<NAME>
+terraform-aws-modules/terraform-aws-vpc
+
+##Example 
+github.com > create new repository > name = terraform-aws-apache-example 
+registry.terraform.io > Publish > Module > Select Repository on Github > Publish 

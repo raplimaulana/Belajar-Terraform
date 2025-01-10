@@ -1,0 +1,54 @@
+### CONDITIONAL EXPRESSIONS ###
+
+##If else expressions
+Terraform support ternary if else conditions.
+Return type for if and else must be same type.
+
+var.a != "" ? var.a : "default-a"
+var.example ? tostring(12) : "hello" 
+
+
+#For expression 
+For expressions allows you to iterative over a complex type and apply transformations.
+A for expressions can accept input a list, set, tuple, map or an object.
+
+[for s in var.list : upper(s)]                                #uppercase each string in provided list
+[for k, v in var.map : length(k) + length(v)]                 #for a map you can get key and value
+[for i, v in var.list : "${i} is ${v}"]                       #For a list you can get index
+
+[for s in var.list : upper(s)]                                #square braces [] return a tuple, ["HELLO", "WORLD"]
+{for s in var.list : s => upper(s)}                           #curly braces {} returns an object, {hello = "HELLO", world = "WORLD"}
+
+[for s in var.list : upper(s) if s != ""]                     #an if statement can be used in for expressions to filter or reduce amount of elements returned
+
+*since terraform can convert a unordered types (maps, objects and sets) to a ordered type (list and tuples) it will need to choose an implied ordering.
+ - Maps and objects 
+   Stored by key A-Z.
+
+ - Sets of strings 
+   Stored by string A-Z.
+
+ - Everything else 
+   Arbitary ordering.
+
+##example 
+nano terraform.tfvars
+worlds=[indonesia, thailand, vietnam, malaysia]
+worlds_capital={
+  "indonesia": "jakarta",
+  "thailand": "bangkok",
+  "vietnam": "hanoi",
+  "malaysia": "kuala lumpur"
+}
+
+nano main.tf 
+terraform {
+}
+
+variable "worlds" {
+  type = list
+}
+
+variable "worlds_capital" {
+  type = map
+}

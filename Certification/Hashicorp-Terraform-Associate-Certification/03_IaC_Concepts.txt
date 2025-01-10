@@ -1,0 +1,75 @@
+### IAC CONCEPTS ###
+##Provisioning vs deployment vs orchestration
+• Provisioning
+  To prepare a server with systems, data, software and make it ready for network operation.
+  Using configuration managament tools like Puppet, Ansible, Chef, Bash Script, or Cloud-Init you can provision server.
+
+• Deployment
+  Deployment is the act of delivering a version of your application to run a provisioned server.
+  Deployment could be performed via AWS CodePipeline, Harness, Jenkins, Github Actions and CircleCI.
+
+• Orchestration 
+  Orchestration is the act of coordinating multiple systems of services. 
+  Orchestration is a common term when working with microservices, container and kubernetes.
+
+##Configuration drift
+Configuration drift is when provisioned infrastructure has an unexpected configuration change due to:
+- Team members manually adjusting configuration options.
+- Malicious actors.
+- Side affects from APIs, SDK or CLIs.
+
+Eg. a junior developer turns on delete on termination for the production database.
+Configuration drift going unnoticed could be loss or breach of cloud services and residing data or result in interuption of services or unexpected downtime.
+
+• How to detect configuration drift?
+  - A compliance tool that can detect missconfiguration.
+    Eg. AWS Config, Azure Policies, GCP Security Health Analytics.
+
+  - Built-in support for drift detection.
+    Eg. AWS CloudFormation Drift Detection   
+
+  - Storing the expected state.
+    Eg. Terraform stat files.
+
+• How to correct configuration drift?
+  - A compliance tool that can be remediate (correct) missconfiguration.
+    Eg. AWS Config.
+  - terraform refresh and plan command.
+  - Manually correcting the configuration (not recomended).
+  - Tearing down and setting up the infrastructure again.
+   
+• How to prevent configuration drift?
+  - Immutable infrastructure, always create and destroy, never use and implement blue-green deployment.
+    - Server are never modified after they are deployed.
+      - Baking AMI images or containers via AWS Image Builder, Hashicorp Packer or GCP Cloud Run.
+  - Using GitOps to version control our IaC and peer review every single pull request change to infrastructure.
+
+##Mutable infrastructure vs immutable infrastructure
+• Mutable infrastructure
+  A VM is deployed and then a configuration management tools like Ansible, Puppet, Chef, Salt or Cloud-Init is used to configure the state of the server.
+
+  Develop > Deploy > Configure 
+            (VM)     (Cloud-Init)
+
+• Immutable infrastructure
+  A VM launched and provisioned, then it is turned into a virtual image and stored in image repository.
+  That image will used to deployed VM Instance.
+
+  Develop > Configure > Deploy 
+            (packer) 
+
+##What is GitOps?
+GitOps is when you take Infrastucture as Code (IaC) and you use a git repository to introduce a formal process to review and accept changes to infrastructure code.
+Once that code is accepted, it automatically triggers a deploy.
+
+##Immutable infrastructure guarantee
+Every time Cloud-Init run post deploy, there is no guarantee because its one-to-one with your other VM.
+Terraform encourages your towards an immutable infrastructure architech so you get the following guarantees.
+• Cloud resource failure
+  Handle if EC2 instance fails a status check.
+
+• Application failure 
+  Handle if your post installation script fails due to change in package.
+  
+• Time to deploy
+  handle if you need to deploy in hurray.

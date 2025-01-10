@@ -1,0 +1,81 @@
+### SENTINEL ###
+Sentinel is embedded policy as code framework integrated with terraform platform.
+Sentinel is paid service part of team and governance upgrade package.
+Sentinel can be integerated with terraform via terraform cloud as part of your IaC provisioninng pipeline.
+Within terraform cloud, you can create a policy set and apply these to a terraform cloud workspace.
+
+SCM > Terraform Cloud > plan > Sentinel Policies > Apply > New Infrastructure
+
+What is policy as code?
+When you write code to automate regulatory or governance policies.
+
+Features of sentinel:
+- Embedded 
+  Enable policy enforcement in data path to actively reject behaviour instead of passively detecting.
+
+- Fine-grained, condition-based policy 
+  Make policy decision based on condition of other values.
+
+- Multiple enforcement levels
+  Advisory, soft and hard mandatory levels allow policy writers to warn on or reject behaviour.
+
+- External information 
+  Source external information to make holistic policy decisions.
+
+- Multi-cloud compatible
+  Ensure infrastructure changes are within business and regulatory policy accross multiple providers.
+
+##Sentinel policy languange example
+• AWS 
+  - Restrict owner of aws_ami data Source
+  - Enforce mandatory tag on taggable AWS resources 
+  - Restrict availability zone used by EC2 instance 
+  - Disallow 0.0.0.0/0 CIDR block in security group
+  - Restrict instance type of EC2 instance
+  - Require S3 bucket to be private and encrypted bby KMS key
+  - Require VPC to have DNS hostname enable 
+  
+• GCP
+  - Enforce mandatory label on VM
+  - Disallow 0.0.0.0/0 CIDR block in network firewall 
+  - Enforce limit on GKE cluster
+  - Restrict machine type of VM
+
+• Azure 
+  - Enforce mandatory tag of VM 
+  - Restrict publisher of VM 
+  - Restrict VM image 
+  - Restrict size of azure VM 
+  - Restrict CIDR block of security group 
+
+• VMWare
+  - Require storage DRS on datastore cluster 
+  - Restrict size and type of virtual disk
+  - Restrict CPU count and memory of VM 
+  - Restrict size of VM disk 
+  - Require NFS 4.1 and Kerberos on NAS datastore
+
+• Cloud-Agnostic 
+  - Allowed provider 
+  - Prohibited provider 
+  - Limit proposed in non-root cost 
+  - Require all module have version constraints
+  - Require all resource be created in module in private module registry 
+
+#Example of sentinel policy that restrict availability zone for EC2 instance on AWS
+nano restrict-ec2-instance-type.sentinel
+import "tfplan-function" as plan                                                                                        #import policy language function
+
+allowed_zones = [
+  "us-east-1a", "us-east-1b", "us-east-1c", "us-east-1d", "us-east-1e", "us-east-1f",                                   #allowed EC2 zone, include "null" to allow missing or computed values
+]
+
+allEC2Instances = plan.find_resources("aws_instance")                                                                   #get all EC2 instance
+
+violatingEC2Instances = plan.filter_attribute_not_in_list(allEC2Instances, "availability_zone", allowed_zones, true)    #filter to EC2 instance with violation, Warning well be printed for all violation since last parameter is true
+
+violations = length(violatingEC2Instances["messages"])                                                                  #count violation
+
+main = rule {
+  violations is 0                                                                                                       #main rule, define rule
+}

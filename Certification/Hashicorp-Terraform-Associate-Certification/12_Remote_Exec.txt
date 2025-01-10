@@ -1,0 +1,41 @@
+### REMOTE-EXEC ###
+Remote Command has 3 different mode:
+• Inline
+  List of command strings.
+
+  resource "aws_instance" "web" {
+    # ...
+    provisioner "remote-exec" {
+      inline = [
+        "puppet apply",
+        "consule join ${aws_instance.web.private_ip}"
+      ]
+    }
+  }
+
+• Script 
+  Relative or absolute local script that will be copied to the remote resource and then executed.
+
+  resource "aws_instance" "web" {
+    # ...
+    provisioner "remote-exec" {
+      script = [
+        "./setup-users.sh"
+      ]
+    }
+  }
+
+• Scripts 
+  Relative or absolute local script that will be copied to the remote resource and then executed in order.
+
+  resource "aws_instance" "web" {
+    # ...
+    provisioner "local-exec" {
+      scripts = [
+        "./setup-users.sh",
+        "/home/rapli/Dekstop/bootstrap"
+      ]
+    }
+  }
+
+*You can only choose to use one mode at time

@@ -1,0 +1,63 @@
+### OUTPUT VALUES ###
+Output values are computed valued after a terraform apply is performed.
+Outputs allows you to:
+- To obtain information after resource provisioning e.g public ip address.
+- Output a file of values for progammatic integration.
+- Cross-reference stacks via outputs in a state file via terraform_remote_state.
+
+##Example output values
+output {
+  value = aws_instance.my_server.public_ip                            
+}
+
+*public_ip = "54.92.198.147"
+
+output {
+  value       = aws_instance.my_server.public_ip
+  description = "IP public server"
+  sensitive   = true                                        #You can mark output as sensitive, so it does not show in output of your terminal
+}
+
+*public_ip = 
+##Command for run ouput
+• To print all output from a statefile
+  terraform output 
+
+  lib_url = "http://lib.web.com/example/"
+  vpc_id = "vpc-004c2d1ba7394b3d6"
+  web_server_count = 4
+
+• Print a spesific output 
+  terraform output lib_url
+
+  "http://lib.web.com/example/"
+
+• Use -json flag to get output as json data 
+  - terraform output -json
+
+    {
+      "db_password": {
+        "sensitive": false,
+        "type": "string",
+        "value": "54.92.198.147"
+      }
+    }
+
+  - terraform output -json | jq .
+  
+  - terraform output -json | jq -r ".type"
+    string
+  
+  - terraform output -json | jq -r ".public_ip.type"
+    string 
+
+  - terraform output -json | jq -r ".public_ip.value"
+    54.92.198.147
+
+• use -raw flag to preserve quotes for strings
+  curl $(terraform output -raw lb_url)
+
+  <html><body><div>Hello, world!</div></body></html>
+
+
+##Example 2

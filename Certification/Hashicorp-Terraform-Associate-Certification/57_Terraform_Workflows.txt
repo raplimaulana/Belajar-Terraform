@@ -1,0 +1,62 @@
+### TERRAFORM WORKFLOW ###
+Core terraform workflow has 3 steps:
+- Write = Author insfrastructure as code
+- Plan  = Preview changes before applying
+- Apply = Provision reproducible insfrastructure
+
+As you team requirements grow your workflow will evolve.
+Lets look at what this workflow will look for:
+• Individual Practitioner (one person team)
+  - Write 
+    - Ypu write your terraform configuration in your editor choice
+    - You'll store your terraform code in VCS e.g. Github
+    - You repeatedly ru terraform plan and validate to find syntax errors
+    - Tight feedback loop between editing code and running test comands
+
+  - Plan  
+    - When developer is confident with their work, in the write step they commit their code to their local repository
+    - They may beonly using a single branch e.g. main
+    - Once their commit is written they'll proceed to apply
+
+  - Apply 
+    - They will run terraform apply and be prompted to review their plan
+    - After their final review, they will approve the changes and await provisioning
+    - After a successful provision, they will push their local commits to their remote repository
+
+• Team using git
+  Devops team has to setup and maintain their own CI/CD pipeline.
+  They have to figure out how to store state file e.g. standard backend remote state
+  They are limited in their access control (they can't be granular about what actions are allowed to performed by certain members e.g. apply, destroy).
+  They have to figure out a way to safely store and inject secret into their build server's runtime environment.
+  Managing multiple environments can make overhead of the insfrastructure increase dramatically.
+  - Write 
+    - Each team members writes code locally on their machine in their editor choice
+    - A team member will store their code to a branch in their code repository
+      - Branches help avoid conflicts while a member is working on their code
+      - Branches will allow an opportunity to resolve conflict during a merge into main
+    - Terraform plan can be used as quick feedback loop for small teams
+    - For larger teams a concern over sensitive credentials become a concern 
+      - A CI/CD process may be implemented so burden of credentials is abstracted away
+
+  - Plan  
+    - When a branch is ready to be incorporated on pull request, an execution plan can be generated and displayed within pull request for review
+    
+  - Apply 
+    - To apply changes, merge needs to be approved and merged which will kick of a code build server that will run terraform apply
+
+• Team using terraform cloud 
+  Terraform cloud streamlines a lot of CI/CD effort, storing and securing sensitive credentials.
+  Terraform cloud also makes it easier to go back and audit history of multiple run.
+  - Write 
+    - A team will use terraform cloud as their remote backend
+    - Input variables will be stored on terraform cloud instead of local machines
+    - Terraform cloud integerated with you VCS to quickly setup a CI/CD pipeline
+    - A team member write code to branch and commit per usual
+
+  - Plan  
+    - A pull request is create by team member and terraform cloud will generate speculative plan for review in VCS
+    - Members can also review and comment on plan in terraform cloud
+    
+  - Apply 
+    - After pull request is merge, terraform cloud runtime environment will perform a terraform apply
+    - A team member can confirm and appy changes

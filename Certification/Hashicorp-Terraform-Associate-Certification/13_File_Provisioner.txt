@@ -1,0 +1,66 @@
+ ### FILE PROVISIONER ###
+ File provisioner is used to copy files or direftories from our local machine to the newly created resource.
+ • Source 
+   The local file we want to upload to the remote machine.
+
+ • Content 
+   A file or a folder.
+
+ • Destination
+   Where you want to upload the file on the remote machine.
+
+*You may require a connection block within rhe provisioner for authentication
+
+##Example file provisioner 1
+resource "aws_instance" "web" {
+  # ...
+
+  #copies myapp.conf to /etc/myapp.conf
+  provisioer "file" {
+    source      = "conf/myapp.conf"
+    destination = "/etc/myapp.conf"
+  } 
+
+  #copies string in content into /tmp/file.log
+  provisioer "file" {
+    source      = "ami used: ${self.ami}"
+    destination = "/tmp/file.log"
+  } 
+
+  #copies configs.d folder to /etc/configs.d
+  provisioer "file" {
+    source      = "conf/configs.d"
+    destination = "/etc"
+  } 
+
+  #copies all files and folder in apps/app1 to D:/IIS/webapp1
+  provisioer "file" {
+    source      = "apps/app1"
+    destination = "D:/IIS/webapp1"
+  } 
+
+}
+
+
+##Example file provisioner 2
+  resource "aws_instance" "my_server" {
+    ami           = "ami-087c17d1fe0178315"
+    instance_type = "t2.micro"
+    key_name      = "${aws_key_pair.deployer.key_name}
+    vpc_security_group_ids = [aws_security_group.sg_my_server.id]
+    user_data = data.template_file.user_data.rendered
+
+    provisioer "file" {
+      content     = "mars"
+      destination = "/home/ec2-user/barsoon.txt"
+      connection  = {
+        type        = "ssh"
+        user        = "ec2-user"
+        host        = "${self.public_ip}"
+        private_key = "${file("/root/.ssh/terraform)}" 
+      }
+    } 
+    tags = {
+      Name = "MyServer"
+    }
+  }

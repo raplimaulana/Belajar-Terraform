@@ -1,0 +1,33 @@
+### TERRAFORM CLOUD RUN ENVIRONMENT ###
+When terraform cloud execute your terraform plan, it run them in its own run environment.
+
+What is run environment?
+A run environment is VM or container intended for execution of code specific runtime environment.
+A run environment is essentially a code build server.
+Terraform cloud run environment is a single user linux machine running on x86_64 architecture and detail of its internal implementation is not known.
+
+Terraform cloud will inject following environment variable automatically each run.
+These env var can be accessed by defining a variable.
+e.g variable "TFC_RUN_ID" {}
+
+- TFC_RUN_ID
+  A unique identifier for this run.
+  e.g. "run-gbfijh892fow2".
+
+- TFC_WORKSPACE_NAME
+  Name of workspace used in this run.
+
+- TFC_WORKSPACE_PLUG
+  Full slug of configuration used in this run org/workspace.
+  e.g. "acme-corp/prod-load-balancer".
+
+- TFC_CONFIGURATION_VERSION_GIT_BRANCH
+  Name of branch used.
+  e.g. "main"
+
+- TFC_CONFIGURATION_VERSION_GIT_COMMIT_SHA
+  Full commit hash of commit used.
+
+- TFC_CONFIGURATION_VERSION_GIT_TAG
+  Name of git tag used.
+  e.g. 1.1.0

@@ -1,0 +1,21 @@
+### TERRAFORM SETTING ###
+The special terraform configuration block type eg. terraform {...} is used to configure some behaviors of terraform itself.
+In terraform setting we can specify:
+• required_version
+  Expected version of terraform.
+
+• required_providers
+  Providers that will be pull during an terraform init.
+
+• experiments 
+  Experimental language features that community can try and provide feedback.
+
+##Example terraform setting 
+terraform {
+  required_providers {
+    aws = {
+      version = ">= 2.7.0"
+      source  = "hashicorp/aws"
+    }
+  }
+}

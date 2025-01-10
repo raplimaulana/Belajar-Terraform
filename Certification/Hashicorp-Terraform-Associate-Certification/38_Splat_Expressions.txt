@@ -1,0 +1,34 @@
+### SPLAT EXPRESSIONS #### 
+A splat provides a shorter expressions for for expressions.
+A splat operator is represented by an asterisk (*), It originates from ruby language splats.
+In terraform are used to rollup or soak up a bunch of iterations in a for expression.
+
+#for list, sets and tuples                                        #can be written list this
+[for o in var.list : o.id]                            >           var.list[*].id
+[for o in var.list : o.interfaces[0].name]                        var.list[*].interfaces[0].name
+
+
+Splat expressions have special expression when you apply them to lists.
+- If value is anything other than a null value, then splat expression will transform it into a single-element list.
+- If value is null, then splat expression will return an empty tuple.
+This behaviour is useful for modules that accept optional input variables whose default value is null to represent absence of any value to work with other terraform language features that are designed to work with collections.
+
+e.g.:
+variable "website" {
+  type = object ({
+    index_document = string 
+    error_document = string
+  })
+default = null
+}
+
+resource "aws_s3_bucket" "example" {
+  #...
+  dynamic "website" {
+    for_each = var.website[*]
+    content {
+      index_document = website.value.index_document
+      error_document = website.value.error_document
+    }
+  }
+}

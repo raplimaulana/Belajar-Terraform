@@ -1,0 +1,15 @@
+### REPLACING RESOURCES ###
+When resources has become damaged or degraded that cannot be detected by terraform, we can use -replace flag.
+
+##terraform taint
+Terraform taint is used to mark a resource for replacement, next time you ru apply.
+Why would want to mark resource for replacement?
+A cloud resource can become degraded or damaged and you want to return expected resource to a healthy state.
+
+terraform taint aws_instance.my_web.app 
+
+##terraform replace 
+Terraform taint was deprecated in 0.152.
+It is recomended in 0.152+ to use -replace flag and providing a resource address.
+
+terraform apply -replace="aws_instance.example[0]"

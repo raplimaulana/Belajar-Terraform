@@ -1,0 +1,46 @@
+### OPERATOR ###
+Operators are mathematical operations you can preform to numbers within expressions.
+- Multiplication 
+  a*b 
+
+- Division
+  a/b
+
+- Modulus
+  a%b
+
+- Addition
+  a+b
+
+- Substraction
+  a-b
+
+- Flip to negative (*-1)
+  -a
+
+- Equals
+  a==b
+
+- Does not equals
+  a!=b
+
+- Less than
+  a<b
+
+- Greater then
+  a>b
+
+- Less then or equal
+  a<=b
+
+- Greater then or equal
+  a>=b
+
+- or
+  a||b
+
+- and
+  a&&b
+
+- Flip boolean
+  !a

@@ -1,0 +1,17 @@
+### RESOURCE PROVIDERS AND ALIAS ###
+If you need to override the default provider for a resource, you can create alternative provider with alias.
+
+##Example
+provider "google" {
+  region = "us-central1"
+}
+
+provider "google" {
+  alias = "europe"
+  region = "europe-west1"                           #alternate configuration, whose alias is "europe"
+}
+
+resource "google_compute_instance" "example"{
+  provider = google.europe                          #this provider meta-argument select google provider who alias europe rather than default configuration
+  ...
+}

@@ -1,0 +1,9 @@
+### TERRAFORM CLOUD RUN TRIGGERS ###
+Terraform cloud provide a way to connect your workspace to one or more workspaces via run triggers within your organization, know as 'source workspace'.
+
+##Run triggers
+Allow run to queue automatically in your workspace on successful apply of run in any of source workspace.
+You can connect each workspace to up 20 source workspace.
+
+Run trigger are designed for workspace that rely on information or infrastructure produced by other workspace.
+If a terraform configuration use data source to read value that might be changed by another workspace, run triggers let you explicitly specify that external dependency.

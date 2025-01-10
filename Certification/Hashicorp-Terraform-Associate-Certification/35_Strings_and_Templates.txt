@@ -1,0 +1,75 @@
+### STRING AND TEMPLATES ###
+##Strings
+  When quoting strings you use double quotes e.g."Hello".
+  • Escape sequence
+    - \n 
+      Newline.
+    
+    - \r 
+      Cariiage return.
+    
+    - \t 
+      Tab
+    
+    - \"
+      Literal quote without terminating string.
+    
+    - \\
+      Literal backslash.
+    
+    - \uNNNN
+      Unicode character from basic multilingual plane.
+    
+    - \UNNNNNNNNN
+      Unicode character from suplementary plane.
+
+  • Special sequence 
+    - $${
+      Literal ${, without beginning a interpolation sequence.
+
+    - %%{
+      Literal &{, without beginning a template directive sequence.
+
+  • Heredoc style
+    Heredoc is a UNIX style multi-line string.
+
+    <<EOT 
+    hello 
+    world
+    EOT
+
+##Strings template 
+  • String interpolation
+    Allows you to evaluaate an expression between markers e.g. ${...} and coverts it to a string.
+
+    "Hello, ${var.name}"
+
+  • String directive
+    Allows you to evaluate an conditional logic between markers e.g. %{...}.
+
+    "Hello, %{if var.name != ""}${var.name}%{else}unnamed%{endif}! 
+    
+  • Heredoc style
+    <<EOT 
+    %{for ip in aws_instance.example.*.private_ip}
+    server ${ip}
+    %{endfor}
+    EOT
+      
+    <<EOT 
+    %{for ip in aws_instance.example.*.private_ip ~}                  #you can stripe white spacing that would normally be left by directive blocks by providing a trailing tilde e.g. ~
+    server ${ip}
+    %{endfor ~}
+    EOT
+  
+##example 
+nano terraform.tfvars
+hello=world
+
+nano main.tf 
+terraform {
+}
+
+variable "hello" {
+  type = string
+}

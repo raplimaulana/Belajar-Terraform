@@ -1,0 +1,94 @@
+### TERRAFORM BACKEND STANDARD ###
+Only store state, does not perform terraform operating e.g. terraform apply.
+To perform operations you use CLI on your local machine.
+
+Third party backend are standard backend:
+- Simple Storage Service (S3), AWS Cloud Storage
+  Locking via dynamoDB.
+
+- AzureRM, Blob Storage Account 
+  With locking.
+
+- Google Cloud Storage (GCS), Google Cloud's Object Storage 
+  With locking.
+
+- Alibaba Cloud Object Storage Service (OSS), Cloud Storage 
+  Locking via TableStore.
+
+- OpenStack Swift, Rackspace's OpenStack Private Cloud Storage 
+  With Locking.
+
+- Tencent Cloud Object Storage (COS)
+  With locking.
+
+- Manta (Triton Object Storage), Joynet's Cloud Storage 
+  With locking.
+
+- Artifactory
+  A universal repository manager.
+  No locking.
+
+- HashiCorp Consul
+  Service networking platform (service mesh).
+  With locking.
+
+- etcd 
+  A distributed, reliable key-value store for most critical data of a distributed system.
+  etcd no locking, etcdv3 with locking.
+
+- Postgres database 
+  Relational database.
+  With locking 
+
+- Kubernetes secret 
+  Secrets storage in K8 cluster.
+
+- HTTP Protocol 
+  Use a REST API to setup a custom remote backend.
+  Optional locking.
+
+##Example 
+backend "s3" {
+  bucket = "terraform-state000"
+  key    = "statefile"
+  region = "us-east-1"
+}
+
+*backup of a state file will reside on your local machine
+ configuring a standard backend does not require a terraform cloud account or workspace
+
+##Example backend standard with S3
+nano terraform.tfvars
+
+vpc_id = "vpc-bd9bdcc7"
+my_ip_with_cidr = "104.194.51.113/32"
+public_key = "ssh-rsa AAA...."
+instance_type = "t2.micro"
+server_name = "Apache Example server"
+
+
+
+
+nano main.tf 
+
+terraform {
+  backend "s3" {
+    bucket = "terraform-backend-43294082"
+    key    = "terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
+module "apache" {
+  source          = "rapli/apache-example/aws"
+  version         = "1.0.0"
+  vpc_id          = var.vpc_id
+  my_ip_with_cidr = var.my_ip_with_cidr
+  public_key      = var.public_key
+  instance_type   = var.instance_type
+  server_name     = var.server_name
+}
+
+output "public_ip" {
+  value = module.apache.public_ip
+}

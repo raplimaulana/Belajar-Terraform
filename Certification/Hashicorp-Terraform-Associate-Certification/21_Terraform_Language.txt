@@ -1,0 +1,28 @@
+### TERRAFORM LANGUAGE ###
+Hashicorp configuration file (terraform files) contain configuration information about providers and resources.
+Terraform files and in extension of .tf or either .tf.json.
+
+Terraform language consist of only a few basic elements:
+• Blocks 
+  Containers for other content, represent an object.
+  - Block type 
+    Can have zero or more labels and a body.
+
+  - Block label 
+    Name of a block.
+
+• Arguments 
+  Assign a value to a name.
+  They appear within blocks.
+
+• Expressions
+  Represent a value, either literally or by referencing and combining other values.
+  They appear as values for argument or within other expressions.
+
+<BLOCK TYPE> "<BLOCK LABEL>" "<BLOCK LABEL>" {
+  <IDENTIFIER> = <EXPRESSION>                       #argument
+}
+
+resource "aws_vpc" "main" {
+  cidr_blocks = var.base_cidr_blocks
+}

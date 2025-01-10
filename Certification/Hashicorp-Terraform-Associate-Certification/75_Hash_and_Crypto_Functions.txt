@@ -1,0 +1,22 @@
+### HASH AND CRYPTO FUNCTIONS ###
+Generate hashes and cryptographic.
+
+- bcrypt
+  > bcrypt("hello world")
+  $2a$10$D5grTTzcsqyvAeIAnY/mY0IaliCoG7eAMX0/oFcuD.iErkksEbcA
+
+- md5
+- sha1
+- sha256
+- sha512
+- uuid
+- uuidv5
+- base64sha256
+- base64sha512
+- filebase64sha256
+- filebase64sha512
+- filemd5
+- filesha1
+- filesha256
+- filesha512 
+- rsadecrypt

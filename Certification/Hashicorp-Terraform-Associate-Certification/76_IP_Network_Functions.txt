@@ -1,0 +1,41 @@
+### IP NETWORK FUCTIONS ###
+• cidrhost
+  Calculate a full host IP address for a given host number within a given IP network address prefix.
+
+  > cidrhost("10.12.127.0/20", 16)
+  10.112.16.16
+
+  > cidrhost("10.12.127.0/20", 268)
+  10.12.113.12
+
+  > cidrhost("fd00:fd12:3455:7890:00a2::/72", 34)
+  fd00:fd12:3455:7890:00a2::22
+  
+• cidrnetmask
+  Convert an IPv4 address prefix given in CIDR notation into a subnet mask address.
+
+  > cidrnetmask("172.16.0.0/12")
+  255.240.0.0
+
+• cidrsubnet
+  Calculate a subnet address within given IP network address prefix.
+
+  > cidrsubnet("172.16.0.0/12", 4, 2)
+  172.18.0.0/16
+
+  > cidrsubnet("10.1.2.0/24", 4, 15)
+  10.1.2.240/28
+
+  > cidrsubnet("fd00:fd12:3455:7890:00a2::/56", 16, 162)
+  fd00:fd12:3455:7890:00a2::/72
+
+• cidrsubnets 
+  Calculate a sequence of consecutive IP address range within a particular CIDR prefix.
+
+  > cidrsubnets("10.1.0.0/16", 4, 4, 8, 4)
+  [
+    "10.1.0.0/20",
+    "10.1.16.0/20",
+    "10.1.32.0/24",
+    "10.1.48.0/20",
+  ]

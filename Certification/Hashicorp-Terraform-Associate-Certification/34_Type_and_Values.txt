@@ -1,0 +1,25 @@
+## TYPE AND VALUES ###
+Result of an expressions is a value.
+
+All value has type:
+• Primitive types 
+  - string
+    ami = "ami-1ojao982"
+
+  - number
+    size = 6.281353
+
+  - bool 
+    termination_protection = true
+
+• Complex/structural/collection types
+  - list (tuple)
+    regions = ["us-east-1a", "us-east-1b"]
+    
+  - map (object)
+    tags = {env = "Production", priority = 3}
+
+• No type
+  - null 
+    Null represent absence or omissions when you want to use underlying default of a provider's resource configuration option.
+    endpoint = null

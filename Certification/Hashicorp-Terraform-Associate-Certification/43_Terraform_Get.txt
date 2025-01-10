@@ -1,0 +1,9 @@
+### TERRAFORM GET ###
+Terraform get command is used to download and update modules in root module.
+When you're developer your own terraform modules, you may need to frequently pull updated modules but you do not want to initialize your state or pull new providers binaries.
+Terraform get is lightweight, because it only updates modules.
+
+*in most case you want use terraform init, with exception of local module development
+
+##Terraform get command 
+terraform get

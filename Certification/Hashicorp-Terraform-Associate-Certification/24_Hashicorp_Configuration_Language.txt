@@ -1,0 +1,14 @@
+### HASHICORP CONFIGURATION LANGUAGE ###
+Hashicorp Configuration Language (HCL) is an open-source toolkit for creating structured configuration languages that are both human and machine friendly for use with command-line tools.
+
+Hashicorp Configuration Language (HCL):
+• Terraform Language (.tf)
+• Packer Template (.pkr.hcl)
+• Vault Policies (no extension)
+• Boundary Controllers and Workers (.hcl)
+• Consul Configuration (.hcl)
+• Waypoint Application Configuration (.hcl)
+• Nomad Job Specifications (.nomad)
+• Shipyard Blueprint (.hcl)
+• Sentinel Policies
+  - Doesn't use HCL, but its own ACL custom language.

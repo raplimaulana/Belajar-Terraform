@@ -1,0 +1,13 @@
+### TERRAFORM APPLY ###
+Terraform apply will execute what changes on terraform file to cloud providers.
+
+##Terraform command 
+- terraform apply 
+  Terraform will output description of effect of plan and need approval before apply it.
+
+- terraform apply -out=FILE 
+  You can generate a saved plan file which you can then pass along to terraform apply.
+  When using save planed, it will not prompt you to confirm and will act like auto approve.
+
+  e.g. terraform apply -out=my_saved_plan.plan          #save plan
+       terraform apply my_saved_plan.plan               #apply with file saved

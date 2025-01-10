@@ -1,0 +1,14 @@
+### TERRAFORM AND PACKER INTEGRATION ###
+1. Building image 
+   Packer is not a service but a development tool so you need to manually run packer or automate building of image with a build server running packer.
+
+2. Referencing Image 
+   Once an image is built you can reference image as a data source.
+   e.g. for AWS AMI we can ask it to match on regex and to select most recent.
+
+   data "aws_ami" "example" {
+     executable_users = ["self"]
+     most_recent      = true
+     name_regex       = "^myami-\\d{3}"
+     owners           = ["self"]
+   }

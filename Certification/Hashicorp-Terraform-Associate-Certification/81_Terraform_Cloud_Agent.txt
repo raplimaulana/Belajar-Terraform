@@ -1,0 +1,11 @@
+### TERRAFORM CLOUD AGENT ###
+Terraform cloud agent is a paid feature of business plan to allow terraform cloud to communicate with isolated, private or on-premise infrastructure.
+This is useful for on-premise infrastructure types such a vsphere, nutanix or openstack.
+
+The agent architecture is pull-based, so no in bound connectivity is required.
+Any agent you provision wipp poll terraform cloud for work and carry out execution of that work locally.
+- Agent currently only support x86_64 bit linux operating system
+- You can also run agent within docker using official terraform agent docker container 
+- Agent support terraform version 0.12 and above
+- System request at least 4GB of free disk space (for temporary local copies) and 2 GB of memory
+- Need access to make outbound request on HTTPS to (TCP port 443)

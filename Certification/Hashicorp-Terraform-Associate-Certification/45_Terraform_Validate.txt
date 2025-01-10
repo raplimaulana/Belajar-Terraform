@@ -1,0 +1,11 @@
+### TERRAFOR VALIDATE ###
+Terraform validate runs checks that verify whether a configuration is syntactically valid and internally consistent, regardless of any provided variables or exiting state.
+Validate is usefull for general verification of reusable modules, including correctness of attribute names and value types.
+
+When you run terraform plan or terraform apply, validate will automatically be performed.
+
+##Command terraform validate
+terraform validate
+
+Error: Missing required argument 
+.....

@@ -1,0 +1,16 @@
+### TERRAFORM BACKEND STANDARD ###
+Each terraform configuration can specify a backend, which defines where and how operations are performed, where state snapshots are stored.
+
+• Standard backend 
+  Only store state, does not perform terraform operating e.g. terraform apply.
+  To perform operations you use CLI on your local machine.
+
+• Enhanced backends
+  Can both store state.
+  Can permorm terraform operations.
+  Enhanced backend are subdivided further:
+  - Local 
+    Files and data are stored on local machine executing terraform commands.
+
+  - remote 
+    Files and data are stored in cloud e.g. terraform cloud.

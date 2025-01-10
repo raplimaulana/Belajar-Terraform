@@ -1,0 +1,14 @@
+### CURRENT WORKSPACE INTERPOLATION ###
+You can reference current workspace name via terraform.workspace 
+
+resource "aws_instance" "example-1" {
+  count = "${terraform.workspace == "default" ? 5 : 1}
+  ...
+}
+
+resource "aws_instance" "example-2" {
+  tags = {
+    Name = "web - ${terraform.workspace}
+  }
+  ...
+}

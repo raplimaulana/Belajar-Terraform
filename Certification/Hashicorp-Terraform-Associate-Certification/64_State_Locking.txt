@@ -1,0 +1,24 @@
+### STATE LOCKING ###
+Terraform will lock your state for all operations that could write state.
+This prevents others from acquiring lock and potentially corrupting your state.
+
+State locking happens automatically on all operations that could write state.
+You wan't see any message that is happening if state locking fails.
+
+*terraform does not output when a lock is complete
+ however, if acquiring lock is taking longer than expected, terraform will output a status message
+
+##Disable locking 
+You can disable state locking for most commands with -lock flag but its not recommended.
+
+##Force unlock 
+Terraform has a force unlock command to manually unlock state if unlocking failed.
+If you unlock state when someone else is holding lock, it could cause multiple writers.
+Force unlock should only be used to unlock your own lock in situation where automatic unlocking failed.
+
+To protect you, force unlock command requires a unique lock ID.
+Terraform will outputs this lock ID if unlocking fails.
+
+terraform force-unlock 8745fu191-fr34-82a-r3h311ni568 -force
+
+*-force flage will skip use confirmation

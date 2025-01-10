@@ -1,0 +1,15 @@
+### TERRAFORM PLAN ###
+Terraform command creates an execution plan (terrafrom plan).
+Terraform plan does not carry out proposed changed.
+Terraform will output description of effect of plan but without any intent to actually apply it.
+
+A plan consist of :
+- Reading current state of any already existing remote objects to make sure terraform state is up to date.
+- Comparing current configuration to prior state  and nothing any differences.
+- Proposing a set of change actions that should, if apllied will make remote objects match the configuration.
+
+A terraform plan file is binary file.
+If you open it up, you'll just see a machine code.
+
+##Command terraform plan 
+terraform plan

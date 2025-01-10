@@ -1,0 +1,109 @@
+### RESOURCE META-ARGUMENTS ###
+Terraform language defines several meta-arguments, which can be used with any resources type to change behaviour of resources.
+
+• depends_on
+  For specifying explicit dependencies.
+  Order of which resources are provisioned is important when resources depend on others before they are provisioned.
+  Terraform implicitly can determine the order of provision for resources but there may be some cases where it cannot determine correct order. 
+  
+  resource "aws_iam_role_policy" "example" {
+    name = example
+    role = aws_iam_role.example.name
+  }
+
+  resource "aws_instance" "my_server" {
+    ami           = "ami-afggwjb29"
+    instance_type = "t2.micro"
+    iam_instance_profile = aws_iam_instance_profile.example
+    depends_on = [                                                  #depends_on allows you to explicitly specific a dependency of a resource
+      aws_iam_role_policy.example
+    ]
+  }
+
+• count
+  For creating multiple resource instances according to a count.
+  When you are managing o pool object like a fleet of VM you can use count.
+
+  resource "aws_instance" "server" {
+    count = 4                                                       #specific amount of instance you want, for example create 4 EC2
+    
+    name = example
+    instance_type = "t2.micro"
+
+    tags = {
+      Name = "Server ${count.index}"                                #get current count value start from 0
+    }
+  }
+
+  resource "aws_instance" "server-2" {
+    count = length(var.subnet_ids)                                  #create 1 EC2 for each subnet
+    ...
+  }
+
+  output "public_ip" {
+    value = aws_instance.server[1].public_ip
+  }
+
+• for_each
+  To create multiple instances according to a map or set of strings.
+  For each is similiar to count for managing multiple related objects.
+  But you can iterate over a map for more dynamic values.
+
+  resource "azurerm_resource_group" "rg" {
+    for_each {
+      a_group       = "eastus"
+      another_group = "westus2"
+    }
+    name     = each.key                                             #with a map, print out current key
+    location = each.value                                           #with a map, print out current value 
+  }
+
+  resource "aws_iam_user" "the-accounts" {
+    for_each = toset(["Todd", "James", "Alice", "Dottie"])
+    name     = each.key                                             #with a list, print out current key
+  }   
+
+  resource "aws_instance" "my_server" {
+    for_each {
+      nano  = "t2.nano"
+      micro = "t2.micro"
+      small = "t2.small"
+    }
+    ami = "ami-ljqjqur14" 
+    instance_type = each.value
+    tags = {
+      Name = "Server-${each.key}"
+    }
+  }
+
+  output "public_ip" {
+    value = values(aws_instance.my_server)[*].public_ip
+  }
+  
+• provider
+  For selecting a non-default provider configuration. 
+
+• lifecycle
+  For lifecycle customizations.
+  Lifecycle block allows you to change what happens to rescue e.g. create, update, destroy.
+  Lifecycle blocks are nested within resources.
+
+  - create_before_destroy (bool)
+    When replacing a resource, first create new resource before deleting it.
+    Default destroy old first.
+
+    resource "azurerm_resource_group" "example" {
+      ...
+      lifecycle {
+        create_before_destroy = true
+      }
+    } 
+
+  - prevent_destroy (bool)
+    Ensures a resource is not destroyed.
+
+  - ignore_changes (list of attributes)
+    Don't change resource (create, update, destroy) if a change occurs for listed attributes.
+
+• provisioner and connection
+  For taking extra actions after resource creation.

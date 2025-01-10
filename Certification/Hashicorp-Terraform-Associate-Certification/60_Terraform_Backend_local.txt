@@ -1,0 +1,27 @@
+### TERRAFORM BACKEND LOCAL ###
+Local backend:
+- Stores state on local file system 
+- Locks that state using system APi's 
+- Perform operations locally 
+
+• By default you are using backend state when you have no specified backend.
+
+  terraform {
+  }
+
+• You specific backend with argument local and you can change path to local file and woring_directory
+
+  terraform {
+    backend "local" {
+      path = "relative/path/to/terraform.tfstate"
+    }
+  }
+
+• You can set a backend to reference another state file, so you can read its outputted values
+
+data "terraform_remote_state" "networking" {
+  backend = "local"
+  config  = {                                                       #this is way of cross-referencing stacks
+    path  = "${path.module}/networking/terraform.tfstate"
+  } 
+}

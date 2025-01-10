@@ -1,0 +1,65 @@
+### FILESYSTEM FUNCTIONS ###
+• abspath 
+  Take a sting containing a filesystem path and converts it to an absolute path.
+  That is, if the path is not absolute, it will be joined with current working directory.
+
+  > abspath(path.root)
+  /home/users/some/terraform/root
+
+• dirname
+  Take a string containing a filesystem path and remove last portion from it.
+
+  dirname("foo/bar/baz.txt")
+  foo/bar
+
+• pathexpand
+  Take a filesystem path that might begin with a ~ segment and if so it replaces that segment with current user's home directory path.
+
+  > pathexpand("~/.ssh/id_rsa")
+  /home/rapli/.ssh/is_rsa 
+
+  > pathexpand("/etc/resolv.conf")
+  /etc/resolv.conf
+
+• basename
+  Take a string containing a filesystem path and remove all expect last portion from it.
+
+  > basename("foo/bar/baz.txt")
+  baz.txt
+
+• file
+  Read contents of a file at given path and return them as a string.
+  > file("${path.module}/hello.txt")
+  Hello World
+
+• fileexist
+  Determine whether a file axists at a given path.
+
+  > fileexist("${path.module}/hello.txt")
+  true
+
+• fileset 
+  Enumerates a set of reguler file names given a path and pattern.
+
+  > fileset(path.module, "files/*.txt")
+  [
+    "files/hello.txt",
+    "files/world.txt", 
+  ]
+
+• filebase64 
+  Read content of a file at given path and returns them as a base64 encoded string 
+
+  > filebase64("${path.module/hello.txt"})
+  SGVsbG8gV29ybGQ=
+
+• templatefile
+  Read file at given path and renders it's content as a template using a supplied set of template variables.
+
+  %{for addr in ip_addrs ~}
+  backend ${addr}:${port}
+  %{endfor ~}
+
+  > templatefile("${path.module}/backends.tpl", {port=8080, ip_addrs=["10.0.0.1", "10.0.0.2"]})
+  backend 10.0.0.1 8080
+  backend 10.0.0.2 8080

@@ -1,0 +1,51 @@
+### TERRAFORM CLOUD ###
+https://medium.com/@wadexu007/migrating-your-remote-terraform-state-to-terraform-cloud-a-seamless-transition-f1b3659b3e3f
+
+##Check workspace list 
+terraform workspace list 
+
+##Create new workspaces from terraform cloud 
+terraform.io/cloud > Workspaces > New workspace > Choose type = CLI-driven-workflow > Name Workspace = getting-started
+
+##Create API token
+terraform.io/cloud > Settings > Tokens
+
+##Create file main.tf
+nano main.tf 
+
+terraform {
+  backend "remote {
+    hostname = "app.terraform.io"
+    organization = "rapli"              #organization = url sebelum kata workspaces di browser (https://app.terraform.io/app/rapli/workspaces)
+    workspaces {
+      name = "getting-started"
+    }
+  }
+  
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "3.58.0"
+    }
+  }
+}
+
+##Move all variable to terraform cloud
+Move all variable to terraform cloud, because if file terraform.state deleted, terraform cant read file variables.tf and file config aws cli
+
+terraform.io/cloud > Workspaces > getting-started > variables 
+
+Terraform Variables
+Key = instance_type
+Value = t2.macro
+HCL = checklist
+
+Environment Variables
+AWS Access Key ID [None]: AKIDa....
+AWS Secret Access Key [None]: sjalrrra....
+Default region name [None]: us-west-2
+Default output format [None]: json 
+
+AWS_ACCESS_KEY_ID = AKIDa....
+AWS_SECRET_ACCESS_KEY = sjalrrra....
+AWS_DEFAULT_REGION = us-east-1

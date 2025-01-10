@@ -1,0 +1,60 @@
+### LOCAL-EXEC ###
+Local-exec allows you to execute local commands after resource is provisioned.
+The machine that executing terraform (eg. terraform apply) is where the command will execute.
+
+Local exec allows you to run any arbitary commands on your local machine.
+Commonly used to trigger configuration management eg. Ansible, Chef and Puppet.
+
+Alocal environment could be:
+• Local Machine 
+  Your laptop / workstation.
+
+• Build Server 
+  eg. Jenkins, AWS CodeBuild, GCP Cloud Build. 
+
+• Terraform Cloud Run Environment 
+  Single use linux VM on terraform cloud.
+
+#Example use case 
+After you provision a Vm you need to supply the public IP to a third-party security service to add the VM IP address, and you accompolish this by using locally installed third-party CLI on your build server.
+
+##Local-exec example 
+• command (required)
+  The command you want to execute.
+
+  resource "aws_instance" "web" {
+    # ...
+    provisioner "local-exec" {
+      command = "echo ${self.private_ip} >> private_ips.txt"
+    }
+  }
+
+• working_dir
+  Where the command will be executed.
+  eg. /user/rapli/home/project.
+
+• interpreter 
+  The entry point for the command.
+  What local program will run the command
+  eg. Bash, Ruby, AWS CLI, PowerShell.
+
+  resource "null_resoure" "example2" {
+    provisioner "local-exec" {
+      command = "Get-Date > completed.txt"
+      interpreter = ["PowerShell", "-Command"]
+    }
+  }
+
+• environment
+  
+  resource "aws_instance" "web" {
+    # ...
+    provisioner "local-exec" {
+      command = "echo $KEY $SECRET >> credentials.yaml"
+      environment = {
+        KEY = "X2jC5LPYmG"
+        SECRET = "mykTbxiBXZ"
+        } 
+    }
+  }
+

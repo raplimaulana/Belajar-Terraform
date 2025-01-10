@@ -1,0 +1,17 @@
+### TERRAFORM IMPORT ###
+Terraform import command is used to import existing resource into terraform.
+When an approval manual addition of resource needs to be added to our state file, we use import command.
+
+##Terraform import command
+#Define placeholder for your imported resource in configuration file.
+#You can leave the body blank and fill it in after importing, because it will not be autofilled.
+
+resource "aws_instance" "example {
+  #...
+}
+
+#Proceed to importing your import file 
+terraform import <RESOURCE_ADDRESS> <ID>
+terraform import aws_instance.example i-arb237y
+
+*this command can only import one resoure at time

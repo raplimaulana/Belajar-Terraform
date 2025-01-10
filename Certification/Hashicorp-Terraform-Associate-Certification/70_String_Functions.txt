@@ -1,0 +1,102 @@
+### STRING FUNCTIONS ###
+• indent
+  Add a given number of spaces to beginning of all, but first line in a given multi-line string.
+
+  > "  items: ${indent(2, "[\n  foo,\n bar,\n]\n")}"
+  items: [
+    foo,
+    bar,
+  ]
+
+• join
+  Produce a sting by concatenating together all elements of a given list of strings with given delimiter.
+
+  > join(",", ["foo", "bar", "baz"])
+  foo, bar, baz
+
+  > join(",", ["foo"])
+  foo
+
+• lower 
+  Convert all cased letters in given string to lowercase.
+
+  > lower("HELLO")
+  hello
+
+• upper 
+  Converts all cased letter in given string to uppercase
+
+  > upper("hello")
+  HELLO 
+  
+• regex
+  Applies as a regular expression to a string and return matching substrings.
+
+  > regex("^(?:(?P<scheme>[^:/?#]+):)?(?://(P<authority>[^/?#]*))?", "https://terraform.io/docs/")
+  {
+    "authority" = "terraform.io"
+    "scheme"    = "https"
+  }
+
+• regexall 
+  Applies a reguler expression to a string and return a list of all matches.
+
+• replace 
+  Searches a given string for another given substring and replace each occurrence with a given replacement string.
+
+  > replace("hello world", "/w.*d/", "everybody")
+  hello everybody
+
+• split
+  Produces a list by dividing a given string at all occurrences of a given separator.
+
+  > split(",", "foo,bar,baz")
+  [
+    "foo",
+    "bar",
+    "baz",
+  ] 
+
+• strrev
+  Reverses characters in a string.
+
+  > strrev("hello")
+  olleh
+
+• substr 
+  Extracts a substring from a given string by offset and length.
+
+  > substr("hello world", 1, 4)
+  ello
+
+• title 
+  Converts first letter of each word in given string to uppercase.
+
+  > title("hello world")
+  Hello World
+
+• trim 
+  Removes specified character from start and end of given string.
+
+  > trim("?!hello?!", "!?")
+  hello
+
+• trimprefix
+  Removes specified prefix from start of given string.
+  If string does not start with prefix, string is returned unchanged.
+
+  > trimprefix("helloworld", "hello")
+  world
+
+• trimsuffix
+  Removes specified suffix from end of given string.
+
+  > trimsuffix("helloworld", "world")
+  hello
+
+• trimspace
+  Removes all types of whitespace from both start and end of a string.
+
+  > trimspace("  hello\n\n")
+  hello
+

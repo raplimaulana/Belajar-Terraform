@@ -1,0 +1,40 @@
+### INPUT VARIABLES ###
+https://developer.hashicorp.com/terraform/language/values/variables
+
+•  Cara 1
+   1. nano main.tf 
+
+      ...
+      provider "aws" {
+        #configutation options
+        profile = "default
+        region = "us-east-1"
+      }
+
+      variable "instance_type" {
+        type = string
+      }
+
+      resource "aws_instance" "my_server" {
+        ami           = "ami-087c17d1fe0178315"
+        instance_type = "var.instance_type"
+        tags = {
+          Name = "MyServer"
+        }
+      }
+
+•  Cara 2
+   1. nano terraform.tfvars
+
+      instance_type="t2.large"
+    
+   2. nano main.tf 
+      
+      ...
+      resource "aws_instance" "my_server" {
+        ami           = ami-087c17d1fe0178315
+        instance_type = var.instance_type
+        tags = {
+          Name = "MyServer"
+        }
+      } 

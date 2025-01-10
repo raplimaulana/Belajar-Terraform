@@ -1,0 +1,29 @@
+### PROVIDER ###
+Providers are terraform plugin that allow you to interact with:
+• Cloud Service Providers (CSP)
+  Eg. AWS, Azure, GCP
+
+• Software as a Services (SaaS)
+  Eg. Github, Angolia, Stripe 
+
+• Other APIs
+  Eg. Kubernetes, Postgres
+
+Provider are required for your terraform configuration file to work.
+Provider come in three tiers:
+• Official
+  Published by company thaht owns the provider technology or Service.
+
+• Verified
+  Actively maintained, up-to-date and compatible with both terraform, and provider.
+
+• Community 
+  Published by a community member but no guarantee of maintenance, up-to-date, or compatibility.
+
+Providers are distributed separately from terraform, and plugins must be downloaded before use.
+Terraform init wwill download the necessary provider plugins listed in a terraform configuration file.
+
+##Get list of the current providers you are using 
+terraform providers
+
+##Terraform provider configuration 

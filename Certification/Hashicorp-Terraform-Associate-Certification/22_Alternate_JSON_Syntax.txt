@@ -1,0 +1,18 @@
+### ALTERNATE JSON SYNTAX ###
+Terraform also supports an alternative syntax that is JSON-compatible.
+Terraform expects JSON syntax files to be named with .tf.json.
+
+This syntax is useful when generating portions of a configuration progammatically.
+Since existing JSON libraries can be used to prepare generated configuration files.
+
+##Example of JSON syntax 
+{
+  "resource": {
+    "aws_instance": {
+      "example": {
+        "instance_type": "t2.micro",
+        "ami": "ami-abc123"
+      }
+    }
+  }
+}

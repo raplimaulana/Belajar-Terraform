@@ -1,0 +1,37 @@
+### CONNECTION ###
+A connection block tells a provisioner or resource how to establish a connection.
+
+##Copies the file as root user using ssh  
+provisioner "file" {
+  source      = "conf/myapp.conf"
+  destination = "/etc/myapp.conf
+
+  connection {
+    type     = "ssh"
+    user     = "root"
+    password = "${var.root_password}"
+    host     = "${var.host}"
+  }
+}
+
+*With ssh you can connect through a bastian host eg:
+ - bastian_host
+ - bastian_host_key
+ - bastian_port
+ - bastian_user
+ - bastian_password
+ - bastian_private_key
+ - bastian_certificate
+
+##Copies the file as administrator user using WinRM (Windows Remote Management)
+provisioner "file" {
+  source      = "conf/myapp.conf"
+  destination = "C:/app/myapp.conf
+
+  connection {
+    type     = "winrm"
+    user     = "administrator"
+    password = "${var.root_password}"
+    host     = "${var.host}"
+  }
+}

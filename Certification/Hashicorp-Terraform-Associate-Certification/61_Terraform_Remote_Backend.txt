@@ -1,0 +1,77 @@
+### TERRAFORM REMOTE BACKEND ###
+A remote backend use terraform platform either terraform cloud or terraform enterprise.
+With a remote backend, when terraform apply is performed via CLI.
+Terraform cloud run environment is responsible for executing operation.
+
+Because terraform cloud run environment is executing the command, your provider credential need to be configured in environment variables in terraform cloud.
+terraform.io/cloud > Workspaces > getting-started > variables 
+
+Terraform Variables
+Key = instance_type
+Value = t2.macro
+HCL = checklist
+
+Environment Variables
+AWS Access Key ID [None]: AKIDa....
+AWS Secret Access Key [None]: sjalrrra....
+Default region name [None]: us-west-2
+Default output format [None]: json 
+
+AWS_ACCESS_KEY_ID = AKIDa....
+AWS_SECRET_ACCESS_KEY = sjalrrra....
+AWS_DEFAULT_REGION = us-east-1
+
+##Remote backend 
+When using a remote backend, you need to set terraform cloud workspaces.
+• You can set a single workspace via name 
+
+  terraform {
+    backend "remote" {
+      hostname     = "app.terraform.io"
+      organization = "company"
+      workspaces {
+        name = "my-app-prod"
+      }
+    }
+  }
+
+• You can set a multiple workspace via prefix 
+  On terraform apply, you will have to choose which workspace you want to apply operation
+
+  terraform {
+    backend "remote" {
+      hostname     = "app.terraform.io"
+      organization = "company"
+      workspaces {
+        prefix = "my-app-"
+      }
+    }
+  }
+
+
+##Backend initialization
+When using terraform coud as a remote backend state, you should instead use cloud block to configure it's usage.
+
+#from 
+terraform {
+  backend "remote" {
+    hostname     = "app.terraform.io"
+    organization = "company"
+    workspaces {
+      prefix = "my-app-"
+    }
+  }
+}
+
+#to 
+terraform {
+  cloud {
+    hostname     = "app.terraform.io"
+    organization = "company"
+    workspaces {
+      tags = ["app"]
+    }
+  }
+}
+
+*you can still use backend remote for terraform cloud, but it's recomended to use cloud backend block

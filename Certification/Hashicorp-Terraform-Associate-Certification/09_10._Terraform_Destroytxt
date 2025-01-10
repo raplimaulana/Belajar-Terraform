@@ -1,0 +1,3 @@
+### TERRAFORM DESTROY ###
+#Terraform Destroy 
+terraform apply --destroy 

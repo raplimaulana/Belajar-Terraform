@@ -1,0 +1,29 @@
+### TERRAFORM FMT ###
+THis command applies a subset of terraform language style conventions along with other minor adjustment for readability.
+Terraform fmt will by default look in current directory and apply formarting to all .tf files.
+
+- Adjusting spacing two spaces indent
+  provider {
+      profile = "rapli"
+      region  = "us-west-2"
+  }
+
+  provider {
+    profile = "rapli"
+    region  = "us-west-2"
+  }
+
+- Syntax error 
+  provider }
+    profile = "rapli"
+    region  = "us-west-2"
+  }
+
+  Error: Invalid block definition
+  on main.tf line 11
+  ....
+
+
+##Command teraform fmt
+terraform fmt
+terraform fmt --diff 

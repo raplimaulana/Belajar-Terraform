@@ -1,0 +1,53 @@
+### EXECUTION PLANS ###
+Execution plans is a manual review of what will add, change or destroy before you apply changes.
+$ terraform apply
+
+#Example output terraform apply
+terraform apply
+
+Terrform used to the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + Create 
+
+Terraform will perform the following actions"
+   # aws_instance.app_server will be created
+   + resource "aws_instance" "app_server" {
+       + ami                            = "ami-830c94e3"            #resources and configuration will be listed
+       + arn                            = (known after apply)
+       + associate_public_ip_address    = (known after apply)
+       + avaibility_zone                = (known after apply)
+       + cpu_core_count                 = (known after apply)
+       + cpu_threads_per_core           = (known after apply)
+       + disable_api_termination        = (known after apply)
+       + ebs_optimized                  = (known after apply)
+       + get_password_data              = false
+   ...
+   }
+   
+   Plan: 1 to add, 0 to change, 0 to destroy                        #It will indicate will will be added, changed or destroyed if this plan is approved
+
+   Do you want to perform these actions?
+     Terraform will perform the actions described above,
+     Only "yes" will be accepted to approve.
+
+     Enter a value: yes                                             #A user must approve changes by typing "yes" 
+
+##Visualizing Execution Plans 
+You can visuallize an execution plan as a graph using the terraform graph command.
+Terraform will output a GraphViz file (you'll need GraphViz installed to view the file).
+GraphViz is a open source tools for drawing graphs specified in DOT language script having the file name extension "gv".
+
+Terraform build a dependency graph from the Terraform configurations and walks this graph to generate plans, refresh state and more.
+$terraform graph | fot -Tsvg > graph.svg
+
+When you use terraform graph, this is a visual presentation of the dependency graph.
+What is sependency graph?
+In mathematics is a direted graph representing dependencies of several objects towards each other.
+
+• Resource node []
+  Represents a single resource.
+
+• Resource meta-node ()
+  Represents a group of resources, but does not represent any actions on its own.
+
+• Provider configuration node <>
+  Represent the time to fully configured provider.

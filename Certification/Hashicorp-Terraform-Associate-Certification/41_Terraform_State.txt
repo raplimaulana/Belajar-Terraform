@@ -1,0 +1,64 @@
+### TERRAFORM STATE ###
+
+##What is state?
+State is particular condition cloud of cloud resources at specific time.
+E.g. We expected there to be a VM running centos on AWS with compute type of t2.micro.
+
+##How does terraform preserve state?
+When you provision infrastructure via terraform, it will create state file named terraform.state.
+This state file is a JSON data structure with a one-to-one mapping from resource instances to remote objects.
+
+##Example
+nano terraform.state
+
+{
+  "version" : 4,
+  "terraform_version": "1.0.4",
+  "serial": 1,
+  .........
+}
+
+##Command terraform state
+• terraform state list
+  List resources in state.
+
+• terraform state mv
+  - Rename existing resources
+    terraform state mv aws_instance.my_server aws_instance.our_server
+
+
+  - Move a resource into module
+    terraform state mv packet_device.worker module.worker.packet_device.worker
+
+  - Move a module into module
+    terraform state mv module.app module.parent.app
+
+  *if you were just rename a resource or move it to another module, run terraform apply. 
+   terraform will destroy and create resource.
+   state mv allows you to just change the reference so you can avoid a create and destroy action.
+
+• terraform state pull
+  pull current remote state and output to stdout.
+
+• terraform state push
+  Update remote state from a local state.
+
+• terraform state replace-provider 
+  Replace provider in state.
+
+• terraform state rm
+  Remove instance from state.
+
+• terraform state show
+  Show resource in state.
+
+  terraform state show aws_instance.my_server
+
+##Terraform state backup
+All terraforms state subcommands that modify state will write a backup file.
+Read only commands will not modify state e.g. list, show.
+Terraform will take current state and store it in a file called terraform.tfstate.backup.
+
+Backup cannot be disabled.
+This is by design to enforce best-practice for recovery.
+To get rid of backup file, you need to manually delete the files.

@@ -1,0 +1,37 @@
+### TERRAFORM BASIC CONCEPTS ###
+##Terraform lifecycle 
+Code > Init > Plan > Validate > Apply > Destroy
+
+• Code 
+  Write or update your terraform configuration file.
+
+• Init 
+  Initialize your projects.
+  Pull latest providers and modules.
+
+• Plan 
+  Speculate what will change or generate a saved execution plan.
+
+• Validate
+  Ensure types and values are valid.
+  Ensures required attributes are present.
+
+• Apply
+  Execute the terraform plan.
+  Provisioning the infrastructure.
+
+• Destroy 
+  Destroy the remote infrastructure.
+
+##Change automation
+• What is change management?
+  A Standard approach to apply change, and resolving conflicts brought about by change.
+  In the context of Infrastructure as Code (IaC), change management is the procuedure that will be followed when resources are modifiy and applied via configuration script.
+
+• What is change automation?
+  A way of automatically creating a consistent, systematic and predictable way of managing change request via controls and policies.
+
+Terraform uses change automation in the form of execution plans and resoureces graph to apply anf review complex changesets.
+Changesets is a collection of commits that represent changes made to a versioning repository.
+IaC use changesets so you can see what has changed by whom overtime.
+Change automation allows you to know exactly what terraform will change and in what order, avoiding many possible human errors.

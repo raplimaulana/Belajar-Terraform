@@ -1,0 +1,182 @@
+### TERRAFORM CLOUD ###
+Terraform cloud is an application that help team use terraform together.
+Terraform cloud feature:
+- Manages your state file
+- History of previous run
+- History of previous state
+- Easy and secure variabe injection
+- Tagging
+- Run trigger (chaining workspace)
+- Specify any version of terraform per workspace
+- Global state sharing
+- Commenting on runs 
+- Notification via webhook, email, slack
+- Organization and workspace level permission
+- Policy as code (via sentinel policy set)
+- MFA 
+- Single Sign In (SSO) at bussines tier 
+- Cost estimation at team and governance tier 
+- Integration with ServiceNow, Splunk, K8 and custom run task
+
+##Terraform cloud terms
+• Organization 
+  An organization is a collection of workspaces.
+
+• Workspace
+  A workspace belong to an organization.
+  A workspace represent a unique environment or stack.
+
+• Team
+  A team is composed of multiple members (users).
+  A team can be assign to workspace.
+
+• Run 
+  A run represent a single run of terraform run environment that is operating on a execution plan.
+  Run can be UI/VCS API driven or CLI driven.
+
+##Run workflow
+Terraform cloud offer 3 types of cloud run workflow.
+When you create a workspace you have to choose a workflow.
+• Version control workflow 
+  Store you terraform configuration in a git repository, and trigger runs based om pull request and merges.
+  Terraform cloud is integerated with a specific branch in your version control system e.g. github via webhook.
+  - Whenever pull request are submitted for branch speculative plan are generated.
+  - Whenever a merge occurs to that branch, than a run is triggered on terraform cloud.
+
+• CLI-driven workflow (Command Line Interface)
+  Trigger remote terraform runs from your local command line.
+  Run are triggered by user running terraform CLI command.
+  e.g. terraform apply and plan locally on their own machine.
+
+• API-driven workflow 
+  A more advanced option, integerated into larger pipeline using terraform API.
+  Workspace are not directly associated with version control repo and run are not driven by webhook on your version control provider.
+  A third party tool or system will trigger run via terraform cloud API.
+  Configuration file is a bash script that is packaged in archive (.tar.gz).
+  You are pushing a configuration version.
+
+##Terraform cloud level permission 
+• Organization level permission
+  Organization level permission manage certain resources or settings accross an organization.
+  - Manage policies 
+    Create, edit and delete organization's sentinel policies.
+  
+  - Manage policy overrides
+    Override soft mandatory policy checks.
+  
+  - Manage workspaces 
+    Create and administrate all workspace within organization 
+  
+  - Manage VCS settings 
+    Set VCS provider and SSH keys available within organization.
+
+  • Organization Owner
+    Every organization has organization owner.
+    This is special role that has every available permission and some actions only available to owner.
+    - Publish private module
+    - Invite users to organization
+    - manage team membership
+    - view all secret teams
+    - Manage organization permission 
+    - Manage all organization setting 
+    - Manage organization billing 
+    - Delete organization 
+    - Manage agent
+
+• Workspace level permission
+  Workspace level permission manage resource and setting for a specific workspace.
+
+  • General workspace permission 
+    Granular permission you can apply to a user via custom workspace permissions.
+    - Read run
+    - Queue plan 
+    - Apply run 
+    - Lock and unlock workspace 
+    - Download sentinel mocks 
+    - Read variable 
+    - Read and write variable 
+    - Read state output 
+    - Read state version 
+    - Read and write state version
+
+  • Fixed permission set 
+    Premade permission for quick assignment
+    - Read 
+      - Read run 
+      - Read variable 
+      - Read state version 
+    
+    - Plan 
+      - Queue plan 
+      - Read variable 
+      - Read state version 
+    
+    - Write 
+      - Apply run 
+      - Lock and unlock workspace
+      - Download sentinel mock 
+      - Read and write variable 
+      - Read and write state version
+
+  • Workspace admin 
+    A workspace admin is a special role that grants all level of permissions and some workspace admin only permissions.
+    - Read and write workspace setting 
+    - Set or remove workspace permissions of any team 
+    - Delete workspace 
+
+##API token
+Terraform cloud support three types of API token:
+• User API token
+  Most flexible token type because they inherit permissions from user they are associated with.
+  Could be for a real user or machine user.
+
+• Team API token
+  Allow access to workspace that team has acess to without being tied to any specific user.
+  Each team can have one valid API token at a time.
+  Any member of a team can generate or revoke that team's token.
+  When a token is regenerated, previous token immediately becomes invalid.
+  Designed for performing API operations on workspace.
+  Same access level to workspace team has acccess to.
+
+• Organization API token
+  Have permissions accross entire organization.
+  Each organization can have one valid API token at a time.
+  Only organization owner can generate or revoke an organization token.
+  Organization API token are designed for creating and configuring workspace and team (but not recommended as an all purpose interface to terraform cloud)
+
+##Private registry
+Terraform cloud allows you to publish private modules for your organization within terraform cloud private registry.
+Terraform cloud private module registry help you share terraform module across your organization.
+It include support for:
+- Module versioning 
+- A searchable and filterable list of available modules 
+- A configuration designer
+
+All user in your organization can view your private module registry.
+You can use either a user token or a team token for authentication, but type of token you choose may grant different permission.
+Using terraform login will obtain a user token.
+To use a team token, you'll need to manually set it your terraform CLI configuration file.
+
+##Cost estimation 
+Cost estimation is a feature to get a monthly cost of resources display along side your run.
+Cost estimation is available with teams and governance plan.
+
+*Cost estimation is only for specific cloud resource for AWS, Azure and GCP
+
+##Workflow option 
+• You can choose any version of terraform for a workspace 
+• You can choose to share state globally across your organization 
+• You can choose to auto approve run (skip manual approval)
+
+##VCS integration 
+Terraform cloud can integerate with following Version Control System (VCS).
+- Github 
+- Github (OAuth)
+- Github Enterprise 
+- Gitlab
+- Gitlab EE and CE 
+- Bitbucket Cloud 
+- Bitbucket Server and Data Center
+- Azure DevOps Service 
+- Azure DevOps Server
+

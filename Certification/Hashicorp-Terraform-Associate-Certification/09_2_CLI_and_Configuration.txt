@@ -1,0 +1,46 @@
+### CLI AND CONFIGURATION ###
+##Download aws cli 
+AWS > Documentation > AWS Command Line Interface > User Guide > Installing the AWS CLI > AWS CLI version 2 > User
+
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+sudo ./aws/install --update
+
+
+##Configuration for aws cli
+AWS > Documentation > AWS Command Line Interface > User Guide > the AWS CLI the AWS CLI > Configuration basics >
+
+aws configure 
+
+AWS Access Key ID [None]: AKIDa....
+AWS Secret Access Key [None]: sjalrrra....
+Default region name [None]: us-west-2
+Default output format [None]: json 
+
+##Terraform main
+nano main.tf
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  #configutation options
+  profile = "default
+  region = "us-east-1"
+}
+
+resource "aws_instance" "my_server" {
+  ami           = ami-087c17d1fe0178315
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "MyServer"
+  }
+}

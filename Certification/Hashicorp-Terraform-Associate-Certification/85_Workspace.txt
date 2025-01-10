@@ -1,0 +1,29 @@
+### WORKSPACE ###
+Workspace allow you manage multiple environments of alternate state files e.g. development, production.
+Think of workspace as being similiar to havinf different branches in a git repository.
+Workspace are technically equivalent to renaming your state file.
+In terraform 0.9 used to called workspace as 'environments'.
+
+There are 2 variant of workspace:
+- CLI Workspace 
+  A way of managing alternate state files (locally or via remote backend).
+
+- Terraform Cloud Workspace 
+  Act like completely separate working directories.
+
+By default you already have a single workspace in your local backend called 'default'.
+'default' terraform can never be deleted.
+
+terraform workspace list 
+* default
+
+
+##Workspace internal 
+Depending if you a local or remote backend changes how state file is stored.
+• Local state 
+  Terraform stores workspace states in a folder called terraform.tfstate.d.
+  In practice individual or very small team will have been know to commit these file to their repositories.
+  Using a remote backend instead is recommended when there are multiple collaborators.
+
+• Remote state 
+  Workspace file are stored directly in configured backend.

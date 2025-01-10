@@ -1,0 +1,81 @@
+### TYPE CONVERSION FUNCTIONS ###
+• can 
+  Evaluate given expression and return a boolean value indicating whether expression produced a result without any error.
+
+  > can(local.foo.bar)
+  true
+
+• defaults
+  A specialized function intended for use with input variable whose type constraint are object types or collection of object type that include ptional atributes.
+
+• nonsensitive
+  Take a sensitive value and return a copy of that value with sensitive marking removed, thereny exposing sensitive value.
+
+  output "sensitive_example_hash" {
+    value = nonsensitive(sha256(var.sensitive_example))
+  } 
+
+• sensitive 
+  Take any value and return a copy of it marked so that.
+  Terraform will treat it as sensitive, with same meaning and behaviour as for sensitive input variable.
+
+  locals {
+    sensitive_content = sensitive(file("${path.module}/sensitive.txt))
+  }
+
+• tobool
+  Convert its argument to a boolean value 
+
+  > tobool("true")
+  true
+
+• tonumber
+  Convert its argument to a number value.
+
+  > tonumber("1")
+  1 
+
+• tostring
+  Convert its argument to a set value.
+
+  > tostring(true)
+  "true"
+
+• tolist 
+  Convert its argument to a list value.
+
+  > tolist(["a", "b", 3])
+  [
+    "a",
+    "b",
+    "3",
+  ]
+
+• tomap
+  Convert its argument to a map value.
+
+  > tomap({"a" = 1, "b" = 2})
+  {
+    "a" = 1
+    "b" = 2
+  }
+
+• toset
+  Convert its argument to a set value.
+
+  > toset(["a", "b", "c"])
+  [
+    "a",
+    "b",
+    "c",
+  ]
+
+• try 
+  Evaluate all of its argument expression in turn and return result of first one that does not produce any error.
+
+  locals {
+    example = try(
+      [tostring(var.example)],
+      tolist(var.example),
+    )
+  }

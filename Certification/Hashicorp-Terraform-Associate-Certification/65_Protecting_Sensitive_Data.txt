@@ -1,0 +1,19 @@
+### PROTECTING SENSITIVE DATA ###
+Terraform state file can contain sensitive data e.g. long-live AWS credentials and is a possible attack vector for malicious actors.
+• Local state 
+  When using a local backend, state is stored in plain-text JSON files:
+  - You need to be careful you don't share this state file with anyone
+  - You need to be careful you don't commit this file to your git repository
+
+• Remote state with terraform cloud
+  When using terraform cloud remote backend:
+  - That state file is held in memory and is not persisted to disk
+  - State file is encrypt at rest
+  - State file is encrypt in transit 
+  - With terraform enterprise, you have detailed audit logging for tampper evidence
+
+• Remote state with third party storage 
+  You can store state with various third party backends.
+  You need to carefully review your backends capabilities to determine if will meet your security and compliance requirements.
+  Some backends are not by default as secure as they could be.
+  For Example with ASW S3 you have to ensure encryption and versioning is turned on, you need a custom trail for data events.

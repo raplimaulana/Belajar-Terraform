@@ -1,0 +1,47 @@
+### TERRAFORM ENTERPRISE ###
+Terraform enterprise is our self hosted distribution of terraform platform.
+Terraform enterprise offer a private instance of terraform platform application with benefit such as:
+- No resources limit
+- With additional enterprise grade architectural features 
+  - Audit logging 
+  - SAML single sign on (SSO)
+
+##Terraform enterprise requirements 
+• Operational mode 
+  How data should be stored.
+  - External services 
+    - Postgres
+    - AWS S3 Bucket 
+    - GCP Cloud Storage Bucket
+    - Azure Blob Storage 
+    - Minio Object Storage  
+
+  - Mounted disk 
+    Store data in a separate directory on a host intended for an external disk.
+    e.g. EBS, ISCSI
+
+  - Demo 
+    Store all data on instance, data can be backup with snapshot (not recommended for production use)
+
+• Credentials
+  Ensure you have credential to use enterprise and have secure connection.
+  - Terraform enterprise license 
+    You obtain a license from hashicorp.
+
+  - TLS certificate and private key 
+    You need to prove you're your own TLS certificate.
+
+• Linux instance
+  Supported OS:
+  - Debian 7.7+
+  - Ubuntu 14.04.5 / 16.04 / 18.04 / 20.04
+  - Redhat Enterprise linux 7.4 - 7.9
+  - Centos 7.4 - 7.9
+  - Oracle Linux 7.4 - 7.9
+  - Amazon Linux 2014.03 / 2014.09 / 2015.03 / 2015.09 / 2016.03 / 2016.09 / 2017.03 / 2017.09 / 2018.03 / 2.0
+
+  hardware requirements:
+  - At least 10GB of disk space on root volume
+  - At least 40GB of disk space for docker data directory (default to /var/lib/docker)
+  - At least 8GB of system memory
+  - At least 4 CPU core

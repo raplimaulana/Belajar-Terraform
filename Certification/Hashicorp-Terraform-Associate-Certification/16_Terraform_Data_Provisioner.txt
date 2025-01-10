@@ -1,0 +1,24 @@
+### TERRAFORM DATA ###
+Similiar to null_resource but does not require or the configuration of a provider.
+
+#null_resource
+resource "null_resource" "main" {
+  triggers = {
+    version = var.version
+  }
+
+  provisioners "local-exec" {
+    command = "echo ${self.triggers.version}"
+  }
+}
+
+#terraform_data
+resource "terraform_data" "main" {
+  triggers_replace = [
+    version 
+  ]
+
+  provisioners "local-exec" {
+    command = "echo ${self.triggers_replace}"
+  }
+}

@@ -1,0 +1,24 @@
+### MIGRATING DEFAULT LOCAL STATE ###
+To migrate a local terraform project that only use default workspace to terraform cloud:
+1. Create a workspace in terraform cloud.
+
+2. Replace your terraform configuration with a remote backend.
+   
+   terraform {
+   }
+
+   terraform {
+     backend "remote" {
+       hostname     = "app.terraform.io"
+       organization = "my-org"
+
+       workspace {
+         name = "my-workspace"
+       } 
+     }
+   }
+
+3. Run terraform init and copy existing state by typing "yes"
+
+   Do you want to copy existing state to new backend?
+   ...

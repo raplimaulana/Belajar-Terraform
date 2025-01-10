@@ -1,0 +1,41 @@
+### VERSION CONSTRAINT ###
+Terraform utilizes semantic versioning for specifying terraform, providers and modules versions.
+Semantic versioning is open-standard on how to define versioning for software management.
+Additional labels for pre-release and build metadata arae available as extention to MAJOR.MINOR.PATCH.
+e.g. MAJOR.MINOR.PATCH:
+  - 2.0.0 
+  - 2.0-rc.1 
+  - 1.0.0-beta
+
+*MAJOR = Version when you make incompatible API changes.
+ MINOR = Version when you add functionality in a backwards compatible manner
+ PATCH = Version when you make backwards compatible
+  
+A version constraint is a string containing one or more conditions, separated by commas.
+  • = or no operator
+    Match exact version number.
+    e.g. "1.0.0", "=1.0.0"
+
+  • != 
+    Excludes an exact version number.
+    e.g. "!=1.0.0"
+
+  • >>= or <<=
+    Compare against a specific version.
+    e.g. ">=1.0.0"
+
+  • ~>
+    Allow only rightmost version (last number) to increment.
+    e.g. "~>1.0.0"
+  
+##example
+nano main.tf
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
