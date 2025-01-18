@@ -1,0 +1,7 @@
+### TERRAFORM AND VAULT ###
+When a developer is working with terraform and they need to deploy provider e.g. AWS, they will need AWS credential.
+AWS credential are long-lived, meaning a user generate key and secret and they are usable until they are deleted.
+AWS credential reside on developer's local machine.
+That machine is at risk of being compromised by a malicious actors looking to steal credential.
+If we could provide credential Just-in-Time (JIT) and expire credential after a short amount of time (short-lived), we can reduce attack surface area of local machine.
+Vault can be used to inject short-lived secret at time of terraform apply.

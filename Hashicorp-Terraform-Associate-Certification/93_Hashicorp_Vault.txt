@@ -1,0 +1,42 @@
+### HASHICORP Vault ###
+What hashicorp vault?
+Vault is a tool for securly accessing secret from multiple secret data store.
+Vault is deployed to a server where:
+- Vault admin can directly manage secret.
+- Operator (developer) can access secret via an API.
+
+Secret Engines > Vault Cluster > Resource 
+
+Vault provide a unified interface:
+• To any secret 
+  - AWS Secret
+  - Consul Key Value
+  - Google cloud KMS
+  - Azure Service principles
+
+• Providing tight acces control
+  - Just-in-Time (JIT)
+    Reducing surface attack based on range of time.
+
+  - Just Enough Privilege (JeP)
+    Reducing service attack by providing least-permissive permission.
+
+• Recording a detailed audit log (temper evidence) 
+
+##Install vault
+wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install vault
+
+##Setup vault 
+127.0.0.1:8200/ui/vault/auth?with=token
+Vault > Secret > Create Secret > Path of this secret = /aws > Secret data [aws_acces_key = AKIA..., aws_secret_access_key = i448..., region = us-east-1]
+
+#Get list secret key value vault
+vault kv list secret/aws/
+
+#Get value secret key vault
+vault kv get secret/aws/hello
+
+#Cretae secret key value vault
+vault kv put secret/aws/hello foo=world

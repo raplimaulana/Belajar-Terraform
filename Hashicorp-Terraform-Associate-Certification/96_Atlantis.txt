@@ -1,0 +1,4 @@
+### ATLANTIS ###
+Atlantis is an open-source developer tool to automate terraform pull request.
+Atlantis was built as an alternative to terraform cloud automation.
+Creator of atlantis now work at hashicorp and is maintained by hashicorp.

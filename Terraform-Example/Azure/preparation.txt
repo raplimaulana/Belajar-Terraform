@@ -1,0 +1,4 @@
+1. Install Azure CLI
+
+2. Login to Azure 
+   - az login 

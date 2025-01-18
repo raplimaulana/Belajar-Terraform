@@ -74,6 +74,7 @@ source "amazon-ebs" "httpd" {
 }
 
 //belum diisi
+build {
   sources = ["source.amazon-ebs.httpd"]
   provisioner "shell" {
     inline = [

@@ -1,0 +1,6 @@
+### CDK FOR TERRAFORM ###
+AWS Cloud Development Kit (CDK) is an imperative infrastructure as code (IaC) tool with SDKs for your favorit language e.g. typescript, python, java, C#, Go 
+AWS CDK is intended only for AWS cloud resources,
+CDK generates out CloudFormation (CFN) templates known as synthesizing and use that for IaC.
+CDK for terraform is a standalone project by hashicorp that allow you to use CDK, but instead of CFN templates, it generates out terraform template.
+This allow you to use CDK tooling to define IaC resource for any provider available on terraform via CDK.

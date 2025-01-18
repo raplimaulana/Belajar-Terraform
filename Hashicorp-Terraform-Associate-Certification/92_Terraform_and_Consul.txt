@@ -1,0 +1,18 @@
+### TERRAFORM AND CONSUL ###
+Consule is useful when you have a micro-service or service-oriented architecture with hundred or thousand of services (container apps or workload).
+Consul is a service networking platform which provide:
+- Service discovery
+  Central registry for services in network.
+  Allows for direct communication, no single-point of failure via load balancer.
+
+- Service mesh 
+  Managing network traffic between services.
+  A communication layer on top of your container application (think middleware).
+
+- Application configuration capabilities
+
+Consule integerated with terraform in following ways:
+- Remote backend 
+  Consulehas a Key Value (KV) Store to store configuration.
+
+- Consul provider 

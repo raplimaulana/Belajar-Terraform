@@ -1,0 +1,100 @@
+### GRUNTWORK ###
+Gruntwork is a software company that build DevOps tools that extends or leverages terraform.
+• Infrastructure as code library  
+  300.000 lines of reusable, battle-tested, production-ready infrastructure code for AWS, GCP, Azure, bash script, Go programs, and other tools.
+
+• Terragrunt
+  Terragrunt can work arround limitations of terraform in variety of way.
+  Terragrunt is a thin wrapper for terraform that provide extra tool for:
+  - Keeping your configuration DRY 
+    Don't-Repeat-Yourself (DRY) is a progamming methodology to abstract repeated code into function, modules or libraries and often in isolated file to reduce code complexity effort and error.
+
+  - Working with multiple terraform modules 
+
+  - Managing remote state
+
+  One Example is providing dynamic value to a provider on definition which cannot be done with terraform.
+  Terragrunt supports better granularity for modules by reducing lots of boilerplate.
+  This is important when you need to start writing UnitTest for your infrastructure.
+
+  e.g:
+  terraform {
+    source = "tfr:///terraform-aws-moduels/vpc/aws?version=3.5.0"                #indicicate where to source terraform module from, example from tfr://registry.terraform.io/terraform-aws-moduels/vpc/aws?version=3.5.0
+  }                                                                              #note extra '/' after protocol is required for shorthand notation
+
+  generate "provider" {                                                          #providing dynamic value to provider
+    path     = "provider.tf"
+    if_exist = "overwrite_terragrunt"
+    contents = <<E0F
+               provider "aws" {
+                 region = "us-east-1"                                            #indicate what region to deploy resources into
+               } 
+               EOF
+  }
+
+  inputs = {                                                                     #indicate input value to use for variable of module
+    name = "my-vpc"
+    cidr = "10.0.0.0/16"
+
+    azs             = ["eu-west-1", "eu-west-2", "eu-west-3"]
+    private_subnets = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+    public_subnets  = ["10.0.101.0/24", "10.0.102.0/24", "10.0.103.0/24"]
+
+    enable_nat_gateway = true 
+    enable_vpn_gateway = false
+  }
+ 
+• Terratest 
+  A testing framework for insfrastructure provisioned with terraform.
+
+  #Testing in Terraform
+  - Static analysis 
+    Test your code without deploying.
+    - Tflint 
+    - Terraform validate 
+    - Terraform plan 
+    - Terraform compliance 
+    - Sentinel 
+
+  - Unit test 
+    Test a single module.
+    You need to divide your module into very small unit of work.
+    - TerraTest 
+    - Kitchen-terraform 
+    - Inspec
+
+  - Integration test
+    Test multiple IaC modules working together.
+    - Terratest 
+
+  - End-to-end test 
+    You have to setup persistent test environment.
+    - Gruntwork reference architecture
+
+  #Terratest 
+  Terratest allow you to perform unit test and integration test on your infrastructure.
+  Tests in terratest are written in Golang, but you don't need to known much about Golang to write tests.
+  It test your infrastructure by:
+  1. Temporarily deploying it 
+  2. Validating result
+  3. Tearing down test environment 
+
+  E.g.:
+  func validateHelloWorldApp(t *testing.T, terraformOptions *terraform.Options) {                                       #validate 'Hello, World' app is working
+    url := terraform.Output(t, terraformOptions, "url")                                                                 #run 'terraform output' to get value of output variables
+
+    expectedStatus     := 200                                                                                           #verify app return a 200 OK with text "Hello, World"
+    expectedBody       := "Hello, World"
+    maxRetries         := 10
+    timeBetweenRetries := 3 * time.Second
+    http_helper.HttpGetWithRetry(t, url, nill, expectedStatus, expectedBody, maxRetries, timeBetweenRetries)
+  }
+
+• Gruntwork landing zone for AWS 
+  A collection of baseline for multi-account security on AWS.
+
+• Gruntwork pipeline
+  Security-firstapproach to a CI/CD pipeline for infrastructure.
+
+• Gruntwork reference architecture 
+  Opinionated, battle-tested, best-practice way to assemble code from infrastructure as code library.

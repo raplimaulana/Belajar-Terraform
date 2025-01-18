@@ -1,0 +1,47 @@
+### VAULT INJECTION VIA DATA SOURCE ###
+A vault server is provisioned.
+A vault engine is configured e.g. AWS Secret Engine.
+Vault will create a machine user for AWS.
+Vault will generate short-live AWS creddential from that machine user.
+Vault will manage and apply AWS policy.
+
+Within our terraform, we can provide a data source to vault.
+When terraform apply is run, it will pull short-live credential to be used scope for duration of current run.
+Every time you run apply, you will get new short-live creddential.
+
+data "vault_aws_access_credentials" "creds" {
+  backend = data.terraform_remote_state.admin.outputs.backend
+  role    = data.terraform_remote_state.admin.outputs.role
+}
+
+provider "aws" {
+  region     = var.region 
+  access_key = data.vault_aws_access_credentials.creds.access_key
+  secret_key = data.vault_aws_access_credentials.creds.secret_key
+}
+
+
+
+##Example
+
+data "vault_generic_secret" "aws_creds" {
+  path = "secret/aws"
+}
+
+provider "aws" {
+  region = data.vault_generic_secret.aws_creds.data["region"]
+  access_key = data.vault_generic_secret.aws_creds.data["aws_acces_key"]
+  secret_key = data.vault_generic_secret.aws_creds.data["aws_secret_access_key"] 
+}
+
+resource "aws_instance" "my_server" {
+  ami           = "ami-087c17d1fe0178315"
+  instance_type = "t2.micro"
+  tags          = {
+    Name = "MyServerWithVault"
+  }
+}
+
+output "public_ip" {
+  value = aws_instance.my_server[*].public_ip
+}
